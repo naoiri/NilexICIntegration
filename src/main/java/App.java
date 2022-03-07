@@ -14,8 +14,8 @@ public class App {
 		System.out.println("Integration in progress...");
 		
 		//Nilex Test
-		//NilexData nd = new NilexData();
-		//System.out.println(nd.retrieveEntityById("26").body());
+		NilexData nd = new NilexData();
+		System.out.println(nd.generateAccessToken("naoya.irikura@herrljunga.se", "Praktik2022"));
 		
 		//InfoCaption Test
 		/*
@@ -28,6 +28,7 @@ public class App {
 		}*/
 		
 		//Integration test
+		/*
 		ICData icd = new ICData();
 		String icdToken = icd.generateAccessToken("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icd.getGuides(icdToken);
@@ -36,7 +37,7 @@ public class App {
 		NilexData nd = new NilexData();
 		for(JSONObject jo: icd.convertResponseToJson(guides)) {
 			System.out.println(nd.postEntity(jo));
-		};
+		};*/
 		
 		
 	}
