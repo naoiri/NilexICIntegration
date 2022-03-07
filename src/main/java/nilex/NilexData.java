@@ -76,4 +76,24 @@ public class NilexData {
         
         return response;
 	}
+	
+	public HttpResponse softDeleteArticleById(String token, int id) throws IOException, InterruptedException {
+		JSONObject json = new JSONObject();
+		json.put("EntityType","Articles");
+		json.put("EntityTypeId", 2);
+		json.put("Id", id);
+		json.put("Status", -1);
+		
+		HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+				.header("Authorization", "Bearer " + token)
+                .uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
+                .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+        
+        return response;
+	}
 }
