@@ -15,7 +15,8 @@ public class App {
 		
 		//Nilex Test
 		NilexData nd = new NilexData();
-		System.out.println(nd.generateAccessToken("naoya.irikura@herrljunga.se", "Praktik2022"));
+		String token = nd.generateAccessToken("naoya.irikura@herrljunga.se", "Praktik2022");
+		System.out.println(nd.retrieveEntityById(token, "26").body());
 		
 		//InfoCaption Test
 		/*
