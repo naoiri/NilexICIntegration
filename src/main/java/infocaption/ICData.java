@@ -46,21 +46,20 @@ public class ICData {
 		// Convert to JSONObject
 		// JSONObject jsonObject = new JSONObject(root);
 
-		// Beautify the JSONobject to JSON tree structure
+		// The creation of JSON to post to Nilex
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
 			json.put("EntityType", "Articles");
-			json.put("Title", result.getSummary());
-			json.put("EntityTypeId", 7);
+			json.put("Title", result.getName());
+			json.put("EntityTypeId", 2);
 			json.put("ArticleStatusId", 14);
 			json.put("PublishingScopeId", 2);
-			json.put("AuthorId", 3065); // Kommentera in den för att det ska vara synlig på testnspssp
-			json.put("Keywords", result.getName());
+			json.put("AuthorId", 3065);
 			json.put("KbCategoryId", 7);
 
 			JSONObject innerObject = new JSONObject();
-			innerObject.put("Article Description",
-					"<a href="+result.getFullURL()+" target=\"_blank\" >Tryck här för att komma till guiden</a>");
+			innerObject.put("Question", result.getSummary());
+			innerObject.put("Answer", "<a href="+result.getFullURL()+" target=\"_blank\" >Tryck här för att komma till guiden</a>");
 			json.put("DynamicProperties", innerObject);
 			guideList.add(json);
 		}
