@@ -39,16 +39,5 @@ public class App {
 		};
 		
 		
-		
-		
-		
-		
-		
-		//System.out.println(nd.postEntity(icd.convertResponseToJson(guides)));
-		
-		
-		//System.out.println(nd.postEntity(icd.getFullUrlList(guides).get(0)).body());
-		//System.out.println(nd.postEntity(icd.getFullUrlList(guides).get(0)));
-		
 	}
 }
