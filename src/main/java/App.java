@@ -39,9 +39,8 @@ public class App {
 		System.out.println(icd.convertResponseToJson(guides).size());
 		*/
 		
-		NilexData nd = new NilexData();
-		String nilexToken = nd.generateAccessToken("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.softDeleteArticleById(nilexToken, 1237));
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		System.out.println(nd.softDeleteArticleById(1237));
 		
 		/*
 		for (JSONObject jo : icd.convertResponseToJson(guides)) {
