@@ -24,15 +24,6 @@ public class ICData {
 
 	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
-	private GuideModel guideModel;
-
-	public ICData() {
-		this.guideModel = new GuideModel();
-	}
-
-	public GuideModel getGuideModel() {
-		return this.guideModel;
-	}
 
 	public List<JSONObject> convertResponseToJson(HttpResponse<String> response)
 			throws JsonMappingException, JsonProcessingException {
@@ -67,7 +58,6 @@ public class ICData {
 		return guideList;
 	}
 
-	// ggit et HttpResponse returned.
 	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
