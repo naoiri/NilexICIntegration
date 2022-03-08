@@ -10,7 +10,7 @@ public class App {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		System.out.println("Integration in progress...");
+		System.out.println("Integration in progress...2");
 	
 		// InfoCaption Test
 		/*
@@ -45,6 +45,7 @@ public class App {
 		for (JSONObject jo : icd.convertResponseToJson(guides)) {
 			System.out.println(nd.postEntity(nilexToken, jo));
 		}*/
+		
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData();
 		String icdToken = icData.generateAccessToken("naoyaTest", "naoyaTest");

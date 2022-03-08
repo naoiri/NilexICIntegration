@@ -84,10 +84,11 @@ public class ICData {
 
 			// generates kbCategoryId depending on the title
 			Integer kbCategoryId = categorize(result.getName());
-
+			
+			json.put("EntityType", "Articles");
 			json.put("ArticleStatusId", 14);
 			json.put("PublishingScopeId", 2);
-			json.put("KbCategoryId", 12);
+			json.put("KbCategoryId", kbCategoryId);
 			json.put("EntityTypeId", 2);
 			json.put("Title", result.getName());
 			json.put("AuthorId", 3064);
