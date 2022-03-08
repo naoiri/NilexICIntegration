@@ -39,21 +39,22 @@ public class App {
 		System.out.println(icd.convertResponseToJson(guides).size());
 		*/
 		
-		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		
+		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		/*
 		for(int i: nd.softDeleteMany(1238, 1244)) {
 			System.out.println(i + "deleted!");
-		}
+		}*/
 		//System.out.println(nd.retrieveEntityById(1237));		
 		//System.out.println(nd.softDeleteArticleById(1238));
-		
-		
 		
 		/*
 		for (JSONObject jo : icd.convertResponseToJson(guides)) {
 			System.out.println(nd.postEntity(nilexToken, jo));
 		}*/
 		
-
+		ICData icData = new ICData();
+		System.out.println(icData.categorize("Vad är Teams"));
+		
+		
 	}
 }
