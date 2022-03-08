@@ -42,12 +42,10 @@ public class App {
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		
 		for(int i: nd.softDeleteMany(1238, 1244)) {
-			System.out.println(i + "deleted!");
+			System.out.println(i + "'s Status set to -1");
 		}
 		//System.out.println(nd.retrieveEntityById(1237));		
 		//System.out.println(nd.softDeleteArticleById(1238));
-		
-		
 		
 		/*
 		for (JSONObject jo : icd.convertResponseToJson(guides)) {

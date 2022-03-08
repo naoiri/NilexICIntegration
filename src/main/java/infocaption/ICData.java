@@ -24,14 +24,7 @@ public class ICData {
 
 	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
-	private List<String> categories = new ArrayList<String>();
 
-	public ICData() {
-		//categories.add("Teams");
-		//categories.add("Outlook");
-		categories.add("Trio");
-	}
-	
 	public List<JSONObject> convertResponseToJson(HttpResponse<String> response)
 			throws JsonMappingException, JsonProcessingException {
 
@@ -41,29 +34,30 @@ public class ICData {
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		GuideModel.Root root = om.readValue(response.body(), GuideModel.Root.class);
 
+		// Convert to JSONObject
+		// JSONObject jsonObject = new JSONObject(root);
+
 		// The creation of JSON to post to Nilex
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
-			if(result.getName().indexOf(categories.get(0)) != -1) {
-				json.put("ArticleStatusId", 14);
-				json.put("PublishingScopeId", 2);
-				json.put("KbCategoryId", 17); //For category "Trio"
-				json.put("EntityTypeId", 2);
-				json.put("Title", result.getName());
-				json.put("AuthorId", 3064);
-				JSONObject innerObject = new JSONObject();
-				innerObject.put("Question", result.getSummary());
-				innerObject.put("Answer", "<a href="+result.getFullURL()+" target=\"_blank\" >Tryck här för att komma till guiden</a>");
-				json.put("DynamicProperties", innerObject);
-				
-				guideList.add(json);
-			} 
+			json.put("EntityType", "Articles");
+			json.put("Title", result.getName());
+			json.put("EntityTypeId", 2);
+			json.put("ArticleStatusId", 14);
+			json.put("PublishingScopeId", 2);
+			json.put("AuthorId", 3065);
+			json.put("KbCategoryId", 7);
+
+			JSONObject innerObject = new JSONObject();
+			innerObject.put("Question", result.getSummary());
+			innerObject.put("Answer", "<a href="+result.getFullURL()+" target=\"_blank\" >Tryck här för att komma till guiden</a>");
+			json.put("DynamicProperties", innerObject);
+			guideList.add(json);
 		}
 
 		return guideList;
 	}
 
-	// ggit et HttpResponse returned.
 	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
