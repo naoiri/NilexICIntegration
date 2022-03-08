@@ -80,6 +80,7 @@ public class ICData {
 	//This method checks the sentence from "result.getName()" if the sentence has one of the category keywords
 	//Inparameter: result.getName()
 	//Returns a kbCategoryId number which associates with the category keyword
+	//This mthod is private because this is only used in convertResponseToJson method in the same class 
 	private Integer categorize(String name) {
 		
 		//To go through the categories with index. This will be used in the for-loop
