@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,9 +47,9 @@ public class NilexData {
 		return token;
 	}
 	
-	public HttpResponse retrieveEntityById(String id) throws IOException, InterruptedException {
+	public HttpResponse retrieveEntityById(Integer id) throws IOException, InterruptedException {
 
-		Map<String, String> values = new HashMap<String, String>();
+		Map<Object, Object> values = new HashMap<Object, Object>();
 		values.put("EntityType", "Articles");
 		values.put("Id", id);
 
@@ -101,5 +102,24 @@ public class NilexData {
                 HttpResponse.BodyHandlers.ofString());
         
         return response;
+	}
+
+	//Specify startId and endId where you want to delete
+	//This will return a list of entity ids that are deleted 
+	public List<Integer> softDeleteMany(int startId, int endId) throws IOException, InterruptedException {
+		
+		List<Integer> deletedIdList = new ArrayList<Integer>();
+		
+		for(int id = startId; id <= endId; id++) {
+			//If the entity with the given id exists
+			if(retrieveEntityById(id).statusCode() == 200) {
+				softDeleteArticleById(id);
+				deletedIdList.add(id);
+			
+			}
+			
+		}
+	
+		return deletedIdList; //If there is no(zero) articles in the database 0(zero) is returned
 	}
 }
