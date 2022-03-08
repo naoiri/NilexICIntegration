@@ -120,6 +120,6 @@ public class NilexData {
 			
 		}
 	
-		return deletedIdList; //If there is no(zero) articles in the database 0(zero) is returned
+		return deletedIdList;
 	}
 }
