@@ -11,13 +11,7 @@ public class App {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		System.out.println("Integration in progress...");
-
-		// Nilex Test
-		// NilexData nd = new NilexData();
-		// String token = nd.generateAccessToken("naoya.irikura@herrljunga.se",
-		// "Praktik2022");
-		// System.out.println(nd.retrieveEntityById(token, "26").body());
-
+	
 		// InfoCaption Test
 		/*
 		 * ICData icd = new ICData(); String icdToken =
@@ -51,10 +45,13 @@ public class App {
 		for (JSONObject jo : icd.convertResponseToJson(guides)) {
 			System.out.println(nd.postEntity(nilexToken, jo));
 		}*/
-		
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData();
-		System.out.println(icData.categorize("Vad är Teams"));
-		
+		String icdToken = icData.generateAccessToken("naoyaTest", "naoyaTest");
+		HttpResponse<String> guides = icData.getGuides(icdToken);
+		for (JSONObject jo : icData.convertResponseToJson(guides)) {
+			System.out.println(nd.postEntity(jo));
+		}
 		
 	}
 }
