@@ -31,6 +31,7 @@ public class ICData {
 	= "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
+	/*
 	int defaultCategory = 0;
 	int dator = 0;
 	int skrivare = 0;
@@ -42,7 +43,7 @@ public class ICData {
 	int outlook = 0;
 	int iag = 0;
 	int trio = 0;
-	
+	*/
 	
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
@@ -110,7 +111,7 @@ public class ICData {
 
 			// generates kbCategoryId depending on "result.getName()"
 			Integer kbCategoryId = categorize(result.getName());
-			countCategorising(kbCategoryId);
+			//countCategorising(kbCategoryId);
 			
 			json.put("EntityType", "Articles");
 			json.put("ArticleStatusId", 14);
@@ -132,6 +133,7 @@ public class ICData {
 		return guideList;
 	}
 	
+	/*
 	// This should be deleted
 	private void countCategorising(int kbCategoryId) {
 
@@ -177,6 +179,7 @@ public class ICData {
 		System.out.println("default:"+defaultCategory + ", Dator:" + dator  + ", Skrivare:" + skrivare  + ", Nätverk:" 
 	+ nätverk + ", iPad:" + iPad + ", Mobiltelefon:" + mobiltelefon + ", Teams:" + teams + ", Outlook:" + outlook + ", IAG:" + iag + ", Trio:" + trio);
 	}
+	*/
 
 	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
 

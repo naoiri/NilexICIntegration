@@ -28,7 +28,7 @@ public class App {
 		HttpResponse<String> guides = icData.getGuides(icdToken);
 		
 		System.out.println(icData.convertResponseToJson(guides).size());
-		icData.showCounts();
+		//icData.showCounts();
 		
 	}
 }
