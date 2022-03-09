@@ -13,17 +13,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.management.loading.PrivateClassLoader;
-
-import org.jcp.xml.dsig.internal.dom.DOMTransform;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import nilex.NilexData;
 
 public class ICData {
 

@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.net.http.HttpResponse;
-import java.util.Iterator;
-
 import org.json.JSONObject;
 
 import infocaption.ICData;
