@@ -27,12 +27,12 @@ public class ICData {
 
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
-			put(11, "Övrigt"); 
-			// value "Övrigt" is not good because if the title contains the word "övrigt" it would allocate wrong. null would cause NullPointerException
+			put(11, "Ã–vrigt"); 
+			// value "Ã–vrigt" is not good because if the title contains the word "Ã¶vrigt" it would allocate wrong. null would cause NullPointerException
 
 			put(4, "Dator");
 			put(5, "Skrivare");
-			put(6, "Nätverk");
+			put(6, "NÃ¤tverk");
 			put(14, "iPad");
 			put(15, "Mobiltelefon");
 
@@ -54,8 +54,8 @@ public class ICData {
 		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
 
 		int kbCategoryId = 11; 
-		//Initialize with 11(as "Övrigt"). 
-		//If no other category words are found it ends up as "Övrigt"
+		//Initialize with 11(as "Ã–vrigt"). 
+		//If no other category words are found it ends up as "Ã–vrigt"
 	
 		String oneSentence = name + summary;
 
@@ -84,6 +84,7 @@ public class ICData {
 		return kbCategoryId;
 	}
 
+
 	public List<JSONObject> convertResponseToJson(HttpResponse<String> response)
 			throws JsonMappingException, JsonProcessingException {
 
@@ -94,9 +95,13 @@ public class ICData {
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		GuideModel.Root root = om.readValue(response.body(), GuideModel.Root.class);
 
+		// Convert to JSONObject
+		// JSONObject jsonObject = new JSONObject(root);
+
 		// The creation of JSON to post to Nilex
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
+
 
 			// generates kbCategoryId depending on "result.getName()"
 			Integer kbCategoryId = categorize(result.getName(), result.getSummary());
@@ -111,7 +116,7 @@ public class ICData {
 			JSONObject innerObject = new JSONObject();
 			innerObject.put("Question", result.getSummary());
 			innerObject.put("Answer",
-					"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
+					"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck hÃ¤r fÃ¶r att komma till guiden</a>");
 			json.put("DynamicProperties", innerObject);
 
 			guideList.add(json);
