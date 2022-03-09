@@ -103,7 +103,7 @@ public class ICData {
 			JSONObject json = new JSONObject();
 
 
-			// generates kbCategoryId depending on "result.getName()"
+			// generates kbCategoryId depending on "result.getName()" and "result.getSummary()"
 			Integer kbCategoryId = categorize(result.getName(), result.getSummary());
 
 			json.put("EntityType", "Articles");
