@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.loading.PrivateClassLoader;
+
+import org.jcp.xml.dsig.internal.dom.DOMTransform;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,9 +27,23 @@ import nilex.NilexData;
 
 public class ICData {
 
-	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
+	private static final String URL_GUIDES 
+	= "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
+	int defaultCategory = 0;
+	int dator = 0;
+	int skrivare = 0;
+	int nätverk = 0;
+	int iPad = 0;
+	int mobiltelefon = 0;		
+	
+	int teams = 0;
+	int outlook = 0;
+	int iag = 0;
+	int trio = 0;
+	
+	
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
 			put(1, "default"); // "kbcategoryId 1" means "No category" which appears only on the parent
@@ -67,7 +84,7 @@ public class ICData {
 			String currentSearchWord = categories.get(keys.get(i));
 
 			// If "name" has one of the category words(t.ex "Teams", "Outlook")
-			if (name.indexOf(currentSearchWord) != -1) {
+			if (name.indexOf(currentSearchWord) != -1 || name.indexOf(currentSearchWord.toLowerCase()) != -1) {
 				kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
 
 			}
@@ -93,6 +110,7 @@ public class ICData {
 
 			// generates kbCategoryId depending on "result.getName()"
 			Integer kbCategoryId = categorize(result.getName());
+			countCategorising(kbCategoryId);
 			
 			json.put("EntityType", "Articles");
 			json.put("ArticleStatusId", 14);
@@ -107,16 +125,59 @@ public class ICData {
 					"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
 			json.put("DynamicProperties", innerObject);
 
-			if(kbCategoryId == 12) { //This IF sentence is just to test to add "Teams" articles
-				guideList.add(json);
-			}
-
+			guideList.add(json);
+			
 		}
 
 		return guideList;
 	}
+	
+	// This should be deleted
+	private void countCategorising(int kbCategoryId) {
 
-	// ggit et HttpResponse returned.
+		switch (kbCategoryId) {
+		case 1:
+			defaultCategory++;
+			break;
+		case 4:
+			dator++;
+			break;
+		case 5:
+			skrivare++;
+			break;
+		case 6:
+			nätverk++;
+			break;
+		case 14:
+			iPad++;
+			break;
+		case 15:
+			mobiltelefon++;
+			break;
+		case 12:
+			teams++;
+			break;
+		case 13:
+			outlook++;
+			break;
+		case 16:
+			iag++;
+			break;
+		case 17:
+			trio++;
+			break;
+		default:
+			System.out.println("Switch default");
+			break;
+		}
+	}
+
+	//This should also be deleted
+	public void showCounts() {
+		System.out.println("default:"+defaultCategory + ", Dator:" + dator  + ", Skrivare:" + skrivare  + ", Nätverk:" 
+	+ nätverk + ", iPad:" + iPad + ", Mobiltelefon:" + mobiltelefon + ", Teams:" + teams + ", Outlook:" + outlook + ", IAG:" + iag + ", Trio:" + trio);
+	}
+
 	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
