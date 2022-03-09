@@ -5,10 +5,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -65,6 +63,22 @@ public class NilexData {
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 		return response;
+	}
+
+	//Try not to get too many entities because this method is just calling /api/publicapi/saveentity many times
+	public List<Object> retrieveManyEntities(int startId, int endId) throws IOException, InterruptedException {
+		List<Object> retrievedEntityList  = new ArrayList<Object>();
+
+		for (int id = startId; id <= endId; id++) {
+			// If the entity with the given id exists
+			if (retrieveEntityById(id).statusCode() == 200) {
+				retrievedEntityList.add(retrieveEntityById(id).body());
+			
+			}
+
+		}
+
+		return retrievedEntityList;
 	}
 	
 	public HttpResponse postEntity(JSONObject article) throws IOException, InterruptedException {
