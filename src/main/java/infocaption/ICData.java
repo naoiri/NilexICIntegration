@@ -55,11 +55,10 @@ public class ICData {
 		for (int i = 0; i < keys.size(); i++) {
 
 			String currentSearchWord = categories.get(keys.get(i));
-			// System.out.println("Current Search Word:" + currentSearchWord + keys.get(i));
 
 			// If "name" has one of the category words(t.ex "Teams", "Outlook")
 			if (name.indexOf(currentSearchWord) != -1) {
-				kbCategoryId = keys.get(i); // Allocates 1, 12, 13....
+				kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
 
 			}
 
@@ -82,7 +81,7 @@ public class ICData {
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
 
-			// generates kbCategoryId depending on the title
+			// generates kbCategoryId depending on "result.getName()"
 			Integer kbCategoryId = categorize(result.getName());
 			
 			json.put("EntityType", "Articles");
