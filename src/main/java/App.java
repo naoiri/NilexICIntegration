@@ -13,29 +13,23 @@ public class App {
 
 		System.out.println("Integration in progress...2");
 	
-		//Below is the code for imigrating(Posting) articles.
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData();
 		String icdToken = icData.generateAccessToken("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides(icdToken);
-		for (JSONObject jo : icData.convertResponseToJson(guides)) {
+		
+		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
+		System.out.println(jsonObjects.size());
+		for (JSONObject jo : jsonObjects) {
 			System.out.println(nd.postEntity(jo));
 		}*/
+		NilexData nData = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		
-		//Below is the code just for checking the articles. No imigration
-		
-		ICData icData = new ICData();
-		String icdToken = icData.generateAccessToken("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icData.getGuides(icdToken);
-		
-		List<JSONObject> jsons = icData.convertResponseToJson(guides);
-		System.out.println(jsons.size());
-		for (JSONObject jo : jsons) {
-			System.out.println(jo);
+		for(Object jsonBody: nData.retrieveManyEntities(1, 10)) {
+			System.out.println("");
+			System.out.println(jsonBody);
 		}
-
-		
 		
 	}
 }

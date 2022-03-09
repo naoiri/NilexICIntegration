@@ -64,6 +64,22 @@ public class NilexData {
 
 		return response;
 	}
+
+	//Try not to get too many entities.
+	public List<Object> retrieveManyEntities(int startId, int endId) throws IOException, InterruptedException {
+		List<Object> retrievedEntityList  = new ArrayList<Object>();
+
+		for (int id = startId; id <= endId; id++) {
+			// If the entity with the given id exists
+			if (retrieveEntityById(id).statusCode() == 200) {
+				retrievedEntityList.add(retrieveEntityById(id).body());
+			
+			}
+
+		}
+
+		return retrievedEntityList;
+	}
 	
 	public HttpResponse postEntity(JSONObject article) throws IOException, InterruptedException {
 		
