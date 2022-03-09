@@ -65,7 +65,7 @@ public class NilexData {
 		return response;
 	}
 
-	//Try not to get too many entities.
+	//Try not to get too many entities because this method is just calling /api/publicapi/saveentity many times
 	public List<Object> retrieveManyEntities(int startId, int endId) throws IOException, InterruptedException {
 		List<Object> retrievedEntityList  = new ArrayList<Object>();
 
