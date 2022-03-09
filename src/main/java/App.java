@@ -27,11 +27,11 @@ public class App {
 		String icdToken = icData.generateAccessToken("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides(icdToken);
 		
-		System.out.println(icData.convertResponseToJson(guides).size());
-//		for (JSONObject jo : icData.convertResponseToJson(guides)) {
-//			System.out.println(jo);
-//		}
-		icData.showCounts();
+		//System.out.println(icData.convertResponseToJson(guides).size());
+		for (JSONObject jo : icData.convertResponseToJson(guides)) {
+			System.out.println(jo);
+		}
+
 		
 		
 	}

@@ -25,23 +25,10 @@ public class ICData {
 	private static final String URL_GUIDES 
 	= "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
-
-	
-	int defaultCategory = 0;
-	int dator = 0;
-	int skrivare = 0;
-	int nätverk = 0;
-	int iPad = 0;
-	int mobiltelefon = 0;		
-	
-	int teams = 0;
-	int outlook = 0;
-	int iag = 0;
-	int trio = 0;
 	
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
-			put(1, "default"); // "kbcategoryId 1" means "No category" which appears only on the parent
+			put(11, "Övrigt"); // "kbcategoryId 1" means "No category" which appears only on the parent
 								// category "Kunskapsbank"
 			//value "default" is not good because if the title contains the word "default" it would allocate wrong. null would cause NullPointerException 
 			
@@ -69,7 +56,7 @@ public class ICData {
 		// To go through the categories with index. This will be used in the for-loop
 		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
 
-		int kbCategoryId = 1; // Initialize with 1(As default). If no category words are found it will remain 1 which make
+		int kbCategoryId = 11; // Initialize with 11(as "Övrigt"). If no category words are found it will remain 1 which make
 								// the category keyword to "default"(comes on "Kunskapsbank" on webapplication)
 
 		String oneSentence = name + summary;
@@ -80,7 +67,7 @@ public class ICData {
 
 			String currentSearchWord = categories.get(keys.get(i));
 			
-			//When searching IAG, only CAPITAL letters check
+			//When searching IAG, only CAPITAL letters check(To avoid ex. "diagram")
     		if(currentSearchWord.equals("IAG")) {
 				if(oneSentence.indexOf(currentSearchWord) != -1) {
 					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
@@ -93,7 +80,6 @@ public class ICData {
 				}
 			}
 			
-
 		}
 
 		return kbCategoryId;
@@ -115,7 +101,6 @@ public class ICData {
 
 			// generates kbCategoryId depending on "result.getName()"
 			Integer kbCategoryId = categorize(result.getName(), result.getSummary());
-			countCategorising(kbCategoryId);
 			
 			json.put("EntityType", "Articles");
 			json.put("ArticleStatusId", 14);
@@ -130,60 +115,12 @@ public class ICData {
 					"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
 			json.put("DynamicProperties", innerObject);
 
-			if(kbCategoryId == 16) { //"IAG"
+			
 				guideList.add(json);
 				
-			}
-			
 		}
 
 		return guideList;
-	}
-	
-	// This should be deleted
-	private void countCategorising(int kbCategoryId) {
-
-		switch (kbCategoryId) {
-		case 1:
-			defaultCategory++;
-			break;
-		case 4:
-			dator++;
-			break;
-		case 5:
-			skrivare++;
-			break;
-		case 6:
-			nätverk++;
-			break;
-		case 14:
-			iPad++;
-			break;
-		case 15:
-			mobiltelefon++;
-			break;
-		case 12:
-			teams++;
-			break;
-		case 13:
-			outlook++;
-			break;
-		case 16:
-			iag++;
-			break;
-		case 17:
-			trio++;
-			break;
-		default:
-			System.out.println("Switch default");
-			break;
-		}
-	}
-
-	//This should also be deleted
-	public void showCounts() {
-		System.out.println("default:"+defaultCategory + ", Dator:" + dator  + ", Skrivare:" + skrivare  + ", Nätverk:" 
-	+ nätverk + ", iPad:" + iPad + ", Mobiltelefon:" + mobiltelefon + ", Teams:" + teams + ", Outlook:" + outlook + ", IAG:" + iag + ", Trio:" + trio);
 	}
 	
 	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
