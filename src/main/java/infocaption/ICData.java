@@ -79,12 +79,20 @@ public class ICData {
 		for (int i = 0; i < keys.size(); i++) {
 
 			String currentSearchWord = categories.get(keys.get(i));
-
-			// If "name" has one of the category words(t.ex "Teams", "Outlook")
-			if (oneSentence.indexOf(currentSearchWord) != -1 || oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
-				kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
-
+			
+			//When searching IAG, only CAPITAL letters check
+    		if(currentSearchWord.equals("IAG")) {
+				if(oneSentence.indexOf(currentSearchWord) != -1) {
+					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
+				}
+			} else {
+				// If "name" has one of the category words(t.ex "Teams", "Outlook")
+				if (oneSentence.indexOf(currentSearchWord) != -1 || oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
+					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
+					
+				}
 			}
+			
 
 		}
 
@@ -122,10 +130,10 @@ public class ICData {
 					"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
 			json.put("DynamicProperties", innerObject);
 
-			//if(kbCategoryId == 5) { //"Skrivare"
+			if(kbCategoryId == 16) { //"IAG"
 				guideList.add(json);
 				
-			//}
+			}
 			
 		}
 
