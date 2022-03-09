@@ -32,8 +32,18 @@ public class ICData {
 			put(1, "default"); // "kbcategoryId 1" means "No category" which appears only on the parent
 								// category "Kunskapsbank"
 			//value "default" is not good because if the title contains the word "default" it would allocate wrong. null would cause NullPointerException 
+			
+			put(4, "Dator");
+			put(5, "Skrivare");
+			put(6, "Nätverk");
+			put(14, "iPad");
+			put(15, "Mobiltelefon");			
+			
 			put(12, "Teams");
 			put(13, "Outlook");
+			put(16, "IAG");
+			put(17, "Trio");
+			
 			// Just for now, must be added
 		}
 	};
