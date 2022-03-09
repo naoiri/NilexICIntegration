@@ -1,5 +1,7 @@
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.List;
+
 import org.json.JSONObject;
 
 import infocaption.ICData;
@@ -27,8 +29,9 @@ public class App {
 		String icdToken = icData.generateAccessToken("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides(icdToken);
 		
-		//System.out.println(icData.convertResponseToJson(guides).size());
-		for (JSONObject jo : icData.convertResponseToJson(guides)) {
+		List<JSONObject> jsons = icData.convertResponseToJson(guides);
+		System.out.println(jsons.size());
+		for (JSONObject jo : jsons) {
 			System.out.println(jo);
 		}
 
