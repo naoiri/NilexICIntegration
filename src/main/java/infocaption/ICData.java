@@ -31,7 +31,7 @@ public class ICData {
 	= "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
-	/*
+	
 	int defaultCategory = 0;
 	int dator = 0;
 	int skrivare = 0;
@@ -43,7 +43,6 @@ public class ICData {
 	int outlook = 0;
 	int iag = 0;
 	int trio = 0;
-	*/
 	
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
@@ -70,7 +69,7 @@ public class ICData {
 	// Inparameter: result.getName()
 	// Returns a kbCategoryId number which associates with the category keyword
 	// This method is private because this is only used in convertResponseToJson method in the same class
-	private Integer categorize(String name) {
+	private Integer categorize(String name, String summary) {
 
 		// To go through the categories with index. This will be used in the for-loop
 		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
@@ -78,6 +77,8 @@ public class ICData {
 		int kbCategoryId = 1; // Initialize with 1(As default). If no category words are found it will remain 1 which make
 								// the category keyword to "default"(comes on "Kunskapsbank" on webapplication)
 
+		String oneSentence = name + summary;
+		
 		// Loop through the categories(words)
 		// Allocates categoryId depending on what word is in the result.getName()
 		for (int i = 0; i < keys.size(); i++) {
@@ -85,7 +86,7 @@ public class ICData {
 			String currentSearchWord = categories.get(keys.get(i));
 
 			// If "name" has one of the category words(t.ex "Teams", "Outlook")
-			if (name.indexOf(currentSearchWord) != -1 || name.indexOf(currentSearchWord.toLowerCase()) != -1) {
+			if (oneSentence.indexOf(currentSearchWord) != -1 || oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
 				kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
 
 			}
@@ -110,8 +111,8 @@ public class ICData {
 			JSONObject json = new JSONObject();
 
 			// generates kbCategoryId depending on "result.getName()"
-			Integer kbCategoryId = categorize(result.getName());
-			//countCategorising(kbCategoryId);
+			Integer kbCategoryId = categorize(result.getName(), result.getSummary());
+			countCategorising(kbCategoryId);
 			
 			json.put("EntityType", "Articles");
 			json.put("ArticleStatusId", 14);
@@ -126,14 +127,16 @@ public class ICData {
 					"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
 			json.put("DynamicProperties", innerObject);
 
-			guideList.add(json);
+			//if(kbCategoryId == 5) { //"Skrivare"
+				guideList.add(json);
+				
+			//}
 			
 		}
 
 		return guideList;
 	}
 	
-	/*
 	// This should be deleted
 	private void countCategorising(int kbCategoryId) {
 
@@ -179,8 +182,7 @@ public class ICData {
 		System.out.println("default:"+defaultCategory + ", Dator:" + dator  + ", Skrivare:" + skrivare  + ", Nätverk:" 
 	+ nätverk + ", iPad:" + iPad + ", Mobiltelefon:" + mobiltelefon + ", Teams:" + teams + ", Outlook:" + outlook + ", IAG:" + iag + ", Trio:" + trio);
 	}
-	*/
-
+	
 	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
