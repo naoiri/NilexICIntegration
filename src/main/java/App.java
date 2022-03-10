@@ -39,6 +39,8 @@ public class App {
 		HttpResponse<String> guides = icData.getGuides();
 		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
 		System.out.println(jsonObjects.size());
-		
+		for (JSONObject jo : jsonObjects) {
+			System.out.println(jo);
+		}
 	}
 }

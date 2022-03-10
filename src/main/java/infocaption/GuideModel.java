@@ -9,6 +9,7 @@ public class GuideModel {
         private String summary;
         private String fullURL;
         private String name;
+        private int id;
 
         public String getSummary() {
             return summary;
@@ -32,6 +33,14 @@ public class GuideModel {
 
         public void setName(String name) {
             this.name = name;
+        }
+        
+        public int getId() {
+        	return this.id;
+        }
+        
+        public void setIcId(int id) {
+        	this.id = id;
         }
 
     }

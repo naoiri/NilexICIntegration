@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ICData {
 
-	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
+	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=10";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
 	private String token;
@@ -117,6 +117,7 @@ public class ICData {
 			json.put("EntityType", "Articles");
 			json.put("ArticleStatusId", 14);
 			json.put("PublishingScopeId", 2);
+			json.put("ReferenceNo", result.getId()); //Link with infocaptions id(like "Foreign key")
 			json.put("KbCategoryId", kbCategoryId);
 			json.put("EntityTypeId", 2);
 			json.put("Title", result.getName());
