@@ -47,6 +47,7 @@ public class ICData {
 			put(13, "Outlook");
 			put(16, "IAG");
 			put(17, "Trio");
+			put(18, "VPN");
 		}
 	};
 

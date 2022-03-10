@@ -24,16 +24,20 @@ public class App {
 		for (JSONObject jo : jsonObjects) {
 			System.out.println(nd.postEntity(jo));
 		}*/
-		
-	
+
+		/*
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
-	
 		HttpResponse<String> guides = icData.getGuides();
 		
 		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
 		for (JSONObject jo : jsonObjects) {
-			System.out.println(jo);
-		}
+			System.out.println(nd.postEntity(jo));
+		}*/
+		
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		nd.changeCategory(1758, 18);
+
 		
 	}
 }
