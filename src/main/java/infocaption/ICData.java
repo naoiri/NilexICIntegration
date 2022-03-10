@@ -25,10 +25,17 @@ public class ICData {
 	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
+	private String token;
+
+	public ICData(String id, String secret) throws IOException, InterruptedException {
+		this.token = generateAccessToken(id, secret);
+	}
+
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
-			put(11, "Övrigt"); 
-			// value "Övrigt" is not good because if the title contains the word "övrigt" it would allocate wrong. null would cause NullPointerException
+			put(11, "Övrigt");
+			// value "Övrigt" is not good because if the title contains the word "övrigt"
+			// it would allocate wrong. null would cause NullPointerException
 
 			put(4, "Dator");
 			put(5, "Skrivare");
@@ -44,7 +51,8 @@ public class ICData {
 		}
 	};
 
-	// This method checks the sentence from "result.getName() and result.getSummary()" if the sentence has
+	// This method checks the sentence from "result.getName() and
+	// result.getSummary()" if the sentence has
 	// one of the category keywords
 	// Inparameter: result.getName(), result.getSummary()
 	// Returns a kbCategoryId number which associates with the category keyword
@@ -54,10 +62,10 @@ public class ICData {
 		// To go through the categories with index. This will be used in the for-loop
 		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
 
-		int kbCategoryId = 11; 
-		//Initialize with 11(as "Övrigt"). 
-		//If no other category words are found it ends up as "Övrigt"
-	
+		int kbCategoryId = 11;
+		// Initialize with 11(as "Övrigt").
+		// If no other category words are found it ends up as "Övrigt"
+
 		String oneSentence = name + summary;
 
 		// Loop through the categories(words)
@@ -85,7 +93,6 @@ public class ICData {
 		return kbCategoryId;
 	}
 
-
 	public List<JSONObject> convertResponseToJson(HttpResponse<String> response)
 			throws JsonMappingException, JsonProcessingException {
 
@@ -103,8 +110,8 @@ public class ICData {
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
 
-
-			// generates kbCategoryId depending on "result.getName()" and "result.getSummary()"
+			// generates kbCategoryId depending on "result.getName()" and
+			// "result.getSummary()"
 			Integer kbCategoryId = categorize(result.getName(), result.getSummary());
 
 			json.put("EntityType", "Articles");
@@ -127,17 +134,17 @@ public class ICData {
 		return guideList;
 	}
 
-	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
+	public HttpResponse getGuides() throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().GET().header("accept", "application/json")
-				.header("Authorization", "Bearer " + token).uri(URI.create(URL_GUIDES)).build();
+				.header("Authorization", "Bearer " + this.token).uri(URI.create(URL_GUIDES)).build();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 		return response;
 	}
 
-	public String generateAccessToken(String id, String secret) throws IOException, InterruptedException {
+	private static String generateAccessToken(String id, String secret) throws IOException, InterruptedException {
 
 		String formatted = id + ":" + secret;
 		String encoded = Base64.getEncoder().encodeToString((formatted).getBytes());
