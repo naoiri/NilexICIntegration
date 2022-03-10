@@ -25,6 +25,12 @@ public class ICData {
 	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
+	private String token;
+	
+	public ICData(String id, String secret) throws IOException, InterruptedException {
+		this.token = generateAccessToken(id, secret);
+	}
+	
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
 			put(11, "Övrigt"); 
@@ -126,17 +132,17 @@ public class ICData {
 		return guideList;
 	}
 
-	public HttpResponse getGuides(String token) throws IOException, InterruptedException {
+	public HttpResponse getGuides() throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().GET().header("accept", "application/json")
-				.header("Authorization", "Bearer " + token).uri(URI.create(URL_GUIDES)).build();
+				.header("Authorization", "Bearer " + this.token).uri(URI.create(URL_GUIDES)).build();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 		return response;
 	}
 
-	public String generateAccessToken(String id, String secret) throws IOException, InterruptedException {
+	private static String generateAccessToken(String id, String secret) throws IOException, InterruptedException {
 
 		String formatted = id + ":" + secret;
 		String encoded = Base64.getEncoder().encodeToString((formatted).getBytes());
