@@ -17,11 +17,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class NilexData {
 
+	private static String URL_GET = "http://10.142.11.54:1900/api/PublicApi/getentitybyid";
+	private static String URL_SAVE = "http://10.142.11.54:1900/api/PublicApi/saveentity";
+	
 	private String token;
 
 	public NilexData(String email, String password) throws IOException, InterruptedException {
 		this.token = generateAccessToken(email, password);
-		;
 	}
 
 	private static String generateAccessToken(String email, String password) throws IOException, InterruptedException {
@@ -54,7 +56,7 @@ public class NilexData {
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().header("accept", "application/json")
 				.header("Authorization", "Bearer " + this.token)
-				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/getentitybyid"))
+				.uri(URI.create(URL_GET))
 				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -85,7 +87,7 @@ public class NilexData {
 
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().header("Authorization", "Bearer " + this.token)
-				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
+				.uri(URI.create(URL_SAVE))
 				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
