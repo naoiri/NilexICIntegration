@@ -37,7 +37,9 @@ public class App {
 		}*/
 		
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.changeCategory(1829, 7));
+		nd.changeCategory(1758, 18);
+		
+		
 		
 	}
 }
