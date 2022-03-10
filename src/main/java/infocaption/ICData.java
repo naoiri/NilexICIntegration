@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ICData {
 
-	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=10";
+	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
 	private String token;
@@ -134,7 +134,22 @@ public class ICData {
 
 		return guideList;
 	}
+	
+	//Naoyas Test
+	public List<Integer> collectIds(HttpResponse<String> response) throws JsonMappingException, JsonProcessingException{
+		List<Integer> ids = new ArrayList<Integer>();
+		
+		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		GuideModel.Root root = om.readValue(response.body(), GuideModel.Root.class);
 
+		for(GuideModel.Result result: root.getResults()) {
+			ids.add(result.getId());
+		}
+		
+		return ids;
+		
+	}
+	
 	public HttpResponse getGuides() throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();

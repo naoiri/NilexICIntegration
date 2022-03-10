@@ -21,7 +21,7 @@ public class NilexData {
 
 	public NilexData(String email, String password) throws IOException, InterruptedException {
 		this.token = generateAccessToken(email, password);
-		;
+		
 	}
 
 	private static String generateAccessToken(String email, String password) throws IOException, InterruptedException {

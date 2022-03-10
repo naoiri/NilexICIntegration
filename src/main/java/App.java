@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -37,10 +38,23 @@ public class App {
 		
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides();
-		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
-		System.out.println(jsonObjects.size());
-		for (JSONObject jo : jsonObjects) {
-			System.out.println(jo);
+		System.out.println(icData.collectIds(guides).size());
+		
+		for(Integer i: icData.collectIds(guides)) {
+			System.out.println(i);
 		}
 	}
+	
+	/*
+	private static boolean checkNewArticleInIC(ICData icData, NilexData nilexData) throws IOException, InterruptedException {
+		
+		//Check the latest InfoCaption
+		HttpResponse<String> guides = icData.getGuides(); //Check through 600 hits
+		
+		List<Integer> icIds = icData.collectIds(guides);
+		Collections.sort(icIds); //Sort the list for faster searching
+		
+		//Get Nilex articles
+		
+	}*/
 }

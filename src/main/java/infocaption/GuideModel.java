@@ -46,7 +46,7 @@ public class GuideModel {
     }
 
     public static class Root{
-        public ArrayList<Result> results;
+        private ArrayList<Result> results;
         public ArrayList<Result> getResults() {
             return results;
         }
