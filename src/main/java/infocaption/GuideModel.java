@@ -6,9 +6,9 @@ public class GuideModel {
 
 	public static class Result{
 
-        public String summary;
-        public String fullURL;
-        public String name;
+        private String summary;
+        private String fullURL;
+        private String name;
 
         public String getSummary() {
             return summary;
