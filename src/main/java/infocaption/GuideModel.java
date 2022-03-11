@@ -39,7 +39,7 @@ public class GuideModel {
         	return this.id;
         }
         
-        public void setIcId(int id) {
+        public void setId(int id) {
         	this.id = id;
         }
 
