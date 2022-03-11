@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -58,6 +59,12 @@ public class NilexData {
 				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		ArticleModel articleModel = om.readValue(response.body(), ArticleModel.class);
+
+		System.out.println(articleModel.getReferenceNo());
+
 
 		return response;
 	}

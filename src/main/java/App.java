@@ -34,10 +34,14 @@ public class App {
 		for (JSONObject jo : jsonObjects) {
 			System.out.println(nd.postEntity(jo));
 		}*/
-		
+
+		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		nd.changeCategory(1758, 18);
+		*/
 
-		
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		System.out.println(nd.retrieveEntityById(2));
+
 	}
 }
