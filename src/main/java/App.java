@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -35,6 +36,7 @@ public class App {
 			System.out.println(nd.postEntity(jo));
 		}*/
 
+
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		nd.changeCategory(1758, 18);
@@ -43,5 +45,7 @@ public class App {
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		System.out.println(nd.retrieveEntityById(1));
 
+
 	}
+
 }

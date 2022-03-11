@@ -117,6 +117,7 @@ public class ICData {
 			json.put("EntityType", "Articles");
 			json.put("ArticleStatusId", 14);
 			json.put("PublishingScopeId", 2);
+			json.put("ReferenceNo", result.getId()); //Link with infocaptions id(like "Foreign key")
 			json.put("KbCategoryId", kbCategoryId);
 			json.put("EntityTypeId", 2);
 			json.put("Title", result.getName());
@@ -133,7 +134,22 @@ public class ICData {
 
 		return guideList;
 	}
+	
+	//Naoyas Test
+	public List<Integer> collectIds(HttpResponse<String> response) throws JsonMappingException, JsonProcessingException{
+		List<Integer> ids = new ArrayList<Integer>();
+		
+		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		GuideModel.Root root = om.readValue(response.body(), GuideModel.Root.class);
 
+		for(GuideModel.Result result: root.getResults()) {
+			ids.add(result.getId());
+		}
+		
+		return ids;
+		
+	}
+	
 	public HttpResponse getGuides() throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();

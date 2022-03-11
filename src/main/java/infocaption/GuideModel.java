@@ -6,9 +6,10 @@ public class GuideModel {
 
 	public static class Result{
 
-        public String summary;
-        public String fullURL;
-        public String name;
+        private String summary;
+        private String fullURL;
+        private String name;
+        private int id;
 
         public String getSummary() {
             return summary;
@@ -33,11 +34,19 @@ public class GuideModel {
         public void setName(String name) {
             this.name = name;
         }
+        
+        public int getId() {
+        	return this.id;
+        }
+        
+        public void setIcId(int id) {
+        	this.id = id;
+        }
 
     }
 
     public static class Root{
-        public ArrayList<Result> results;
+        private ArrayList<Result> results;
         public ArrayList<Result> getResults() {
             return results;
         }
