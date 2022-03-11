@@ -43,7 +43,7 @@ public class App {
 		*/
 
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.retriveReferenceId(30000).getData().getReferenceNo());
+		System.out.println(nd.retrieveManyEntitiesByReferenceId(1,20));
 
 	}
 }
