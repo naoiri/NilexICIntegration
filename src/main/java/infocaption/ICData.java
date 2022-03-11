@@ -110,6 +110,7 @@ public class ICData {
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
 
+
 			// generates kbCategoryId depending on "result.getName()" and
 			// "result.getSummary()"
 			Integer kbCategoryId = categorize(result.getName(), result.getSummary());

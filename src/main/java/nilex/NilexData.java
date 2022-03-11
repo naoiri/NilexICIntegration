@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.json.JSONObject;
 
@@ -60,13 +61,31 @@ public class NilexData {
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+		return response;
+	}
+
+	//Retrieve the ReferenceNo from nilex
+	public ArticleModel.Root retriveReferenceId(Integer id) throws IOException, InterruptedException {
+
+		Map<Object, Object> values = new HashMap<Object, Object>();
+		values.put("EntityType", "Articles");
+		values.put("Id", id);
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		String requestBody = objectMapper.writeValueAsString(values);
+
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder().header("accept", "application/json")
+				.header("Authorization", "Bearer " + this.token)
+				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/getentitybyid"))
+				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
+
+		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
 
-		System.out.println(articleModel.getData().getReferenceNo());
-
-
-		return response;
+		return articleModel;
 	}
 
 
@@ -85,6 +104,18 @@ public class NilexData {
 
 		}
 
+		return retrievedEntityList;
+	}
+
+	public List<Object> retrieveManyEntitiesByReferenceId(int startId, int endId) throws IOException, InterruptedException {
+		List<Object> retrievedEntityList = new ArrayList<Object>();
+
+		for (int id = startId; id <= endId; id++) {
+			// If the entity with the given id exists
+			if (retrieveEntityById(id).statusCode() == 200) {
+				retrievedEntityList.add(retriveReferenceId(id).getData().getReferenceNo());
+			}
+		}
 		return retrievedEntityList;
 	}
 
