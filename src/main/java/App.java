@@ -41,7 +41,7 @@ public class App {
 		*/
 
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.retrieveEntityById(2));
+		System.out.println(nd.retrieveEntityById(1));
 
 	}
 }

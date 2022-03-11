@@ -61,13 +61,15 @@ public class NilexData {
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		ArticleModel articleModel = om.readValue(response.body(), ArticleModel.class);
+		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
 
-		System.out.println(articleModel.getReferenceNo());
+		System.out.println(articleModel.getData().getReferenceNo());
 
 
 		return response;
 	}
+
+
 
 	// Try not to get too many entities because this method is just calling
 	// /api/publicapi/saveentity many times
