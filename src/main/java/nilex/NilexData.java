@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,8 +60,16 @@ public class NilexData {
 
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
+
+		System.out.println(articleModel.getData().getReferenceNo());
+
+
 		return response;
 	}
+
+
 
 	// Try not to get too many entities because this method is just calling
 	// /api/publicapi/saveentity many times

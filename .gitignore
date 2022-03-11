@@ -39,3 +39,4 @@
 .metadata/.plugins/org.eclipse.tips.ide/dialog_settings.xml
 .metadata/.plugins/org.eclipse.ui.intro/introstate
 .metadata/.plugins/org.eclipse.ui.workbench/workingsets.xml
+.idea/uiDesigner.xml

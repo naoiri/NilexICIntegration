@@ -35,26 +35,17 @@ public class App {
 		for (JSONObject jo : jsonObjects) {
 			System.out.println(nd.postEntity(jo));
 		}*/
-		
-		ICData icData = new ICData("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icData.getGuides();
-		System.out.println(icData.collectIds(guides).size());
-		
-		for(Integer i: icData.collectIds(guides)) {
-			System.out.println(i);
-		}
+
+
+		/*
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		nd.changeCategory(1758, 18);
+		*/
+
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		System.out.println(nd.retrieveEntityById(1));
+
+
 	}
-	
-	/*
-	private static boolean checkNewArticleInIC(ICData icData, NilexData nilexData) throws IOException, InterruptedException {
-		
-		//Check the latest InfoCaption
-		HttpResponse<String> guides = icData.getGuides(); //Check through 600 hits
-		
-		List<Integer> icIds = icData.collectIds(guides);
-		Collections.sort(icIds); //Sort the list for faster searching
-		
-		//Get Nilex articles
-		
-	}*/
+
 }
