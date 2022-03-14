@@ -112,7 +112,7 @@ public class NilexData {
 
 		for (int id = startId; id <= endId; id++) {
 			// If the entity with the given id exists
-			if (retrieveEntityById(id).statusCode() == 200 && retriveReferenceId(id).getData().getReferenceNo() == null) {
+			if (retrieveEntityById(id).statusCode() == 200 && retriveReferenceId(id).getData().getReferenceNo().contains("KB")) {
 				retrievedEntityList.add(retriveReferenceId(id).getData().getReferenceNo());
 			}
 		}
@@ -161,7 +161,7 @@ public class NilexData {
 			if (retrieveEntityById(id).statusCode() == 200) {
 				softDeleteArticleById(id);
 				deletedIdList.add(id);
-
+				System.out.println(id);
 			}
 
 		}
