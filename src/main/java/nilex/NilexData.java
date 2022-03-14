@@ -65,7 +65,7 @@ public class NilexData {
 	}
 
 	//Retrieve the ReferenceNo from nilex
-	public ArticleModel.Root retriveReferenceId(Integer id) throws IOException, InterruptedException {
+	public String retrieveReferenceNo(Integer id) throws IOException, InterruptedException {
 
 		Map<Object, Object> values = new HashMap<Object, Object>();
 		values.put("EntityType", "Articles");
@@ -84,8 +84,9 @@ public class NilexData {
 
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
-
-		return articleModel;
+		
+		
+		return articleModel.getData().getReferenceNo();
 	}
 
 
@@ -107,14 +108,16 @@ public class NilexData {
 		return retrievedEntityList;
 	}
 
-	public List<Object> retrieveManyEntitiesByReferenceId(int startId, int endId) throws IOException, InterruptedException {
+	public List<Object> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
 		List<Object> retrievedEntityList = new ArrayList<Object>();
 
 		for (int id = startId; id <= endId; id++) {
 			// If the entity with the given id exists
 			if (retrieveEntityById(id).statusCode() == 200) {
-				if (!retriveReferenceId(id).getData().getReferenceNo().contains("KB")) {
-					retrievedEntityList.add(retriveReferenceId(id).getData().getReferenceNo());
+				
+				//Count out ReferenceNos which start "KB"(because these are created on GUI manually)
+				if (!retrieveReferenceNo(id).contains("KB")) {
+					retrievedEntityList.add(retrieveReferenceNo(id));
 				}
 			}
 		}

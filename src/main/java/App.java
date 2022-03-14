@@ -46,7 +46,7 @@ public class App {
 		//nd.softDeleteMany(1800,1900);
 
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.retrieveManyEntitiesByReferenceId(1840,1863));
+		System.out.println(nd.retrieveManyReferenceNos(1840,1863));
 
 	}
 }
