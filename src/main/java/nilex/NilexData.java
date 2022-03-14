@@ -112,8 +112,10 @@ public class NilexData {
 
 		for (int id = startId; id <= endId; id++) {
 			// If the entity with the given id exists
-			if (retrieveEntityById(id).statusCode() == 200 && retriveReferenceId(id).getData().getReferenceNo().contains("KB")) {
-				retrievedEntityList.add(retriveReferenceId(id).getData().getReferenceNo());
+			if (retrieveEntityById(id).statusCode() == 200) {
+				if (!retriveReferenceId(id).getData().getReferenceNo().contains("KB")) {
+					retrievedEntityList.add(retriveReferenceId(id).getData().getReferenceNo());
+				}
 			}
 		}
 		return retrievedEntityList;
