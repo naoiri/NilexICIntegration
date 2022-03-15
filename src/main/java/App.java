@@ -13,7 +13,11 @@ public class App {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		System.out.println("Integration in progress...2");
-	
+
+		NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
+		String refNumber = nd.retrieveReferenceNo(1863);
+		System.out.println(refNumber);
+
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData();
@@ -45,8 +49,8 @@ public class App {
 		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		//nd.softDeleteMany(1800,1900);
 
-		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.retrieveManyReferenceNos(1840,1863));
+		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		//System.out.println(nd.retrieveManyReferenceNos(1840,1863));
 
 	}
 }

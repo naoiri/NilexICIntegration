@@ -67,25 +67,10 @@ public class NilexData {
 	//Retrieve the ReferenceNo from nilex
 	public String retrieveReferenceNo(Integer id) throws IOException, InterruptedException {
 
-		Map<Object, Object> values = new HashMap<Object, Object>();
-		values.put("EntityType", "Articles");
-		values.put("Id", id);
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		String requestBody = objectMapper.writeValueAsString(values);
-
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder().header("accept", "application/json")
-				.header("Authorization", "Bearer " + this.token)
-				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/getentitybyid"))
-				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
-
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+		HttpResponse<String> response = retrieveEntityById(id);
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
-		
-		
+
 		return articleModel.getData().getReferenceNo();
 	}
 
