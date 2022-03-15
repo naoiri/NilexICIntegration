@@ -15,8 +15,10 @@ public class App {
 		System.out.println("Integration in progress...2");
 
 		NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
-		String refNumber = nd.retrieveReferenceNo(1863);
-		System.out.println(refNumber);
+		List<String> refNumbers = nd.retrieveManyReferenceNos(1859, 1860);
+		for (String refNumber : refNumbers) {
+			System.out.println(refNumber);
+		}
 
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");

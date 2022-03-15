@@ -93,8 +93,8 @@ public class NilexData {
 		return retrievedEntityList;
 	}
 
-	public List<Object> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
-		List<Object> retrievedEntityList = new ArrayList<Object>();
+	public List<String> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
+		List<String> retrievedEntityList = new ArrayList<String>();
 
 		for (int id = startId; id <= endId; id++) {
 			// If the entity with the given id exists
