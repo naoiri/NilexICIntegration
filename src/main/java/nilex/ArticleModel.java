@@ -1,9 +1,5 @@
 package nilex;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Date;
-
 public class ArticleModel{
     public static class Data{
 
