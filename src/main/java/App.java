@@ -48,7 +48,7 @@ public class App {
 		nd.softDeleteMany(1800,1900);
 		*/
 
-		// A good state for testing data in nilex = ID 1864 - 2480
+		// A good state for testing data in nilex = ID 1864 - 2432
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		List<String> nilexList  = nd.retrieveManyReferenceNos(1864, 2432);
 		List<Integer> nilexListInt = new ArrayList<>(nilexList.size());
