@@ -68,7 +68,9 @@ public class App {
 		if (nilexListInt.equals(IcList)){
 			System.out.println("No update has been detected");
 		} else {
-			System.out.println("Update has been detected");
+			IcList.removeAll(nilexListInt);
+			System.out.println(IcList);
+
 		}
 
 	}
