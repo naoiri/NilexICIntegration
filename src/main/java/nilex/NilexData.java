@@ -84,8 +84,8 @@ public class NilexData {
 
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
-		
-		
+
+
 		return articleModel.getData().getReferenceNo();
 	}
 
@@ -108,13 +108,13 @@ public class NilexData {
 		return retrievedEntityList;
 	}
 
-	public List<Object> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
-		List<Object> retrievedEntityList = new ArrayList<Object>();
+	public List<String> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
+		List<String> retrievedEntityList = new ArrayList<>();
 
 		for (int id = startId; id <= endId; id++) {
 			// If the entity with the given id exists
 			if (retrieveEntityById(id).statusCode() == 200) {
-				
+
 				//Count out ReferenceNos which start "KB"(because these are created on GUI manually)
 				if (!retrieveReferenceNo(id).contains("KB")) {
 					retrievedEntityList.add(retrieveReferenceNo(id));

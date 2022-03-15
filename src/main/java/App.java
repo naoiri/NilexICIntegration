@@ -1,12 +1,13 @@
 import java.io.IOException;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import infocaption.ICData;
 import nilex.NilexData;
+import org.json.JSONObject;
 
 public class App {
 
@@ -42,11 +43,33 @@ public class App {
 		nd.changeCategory(1758, 18);
 		*/
 
-		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		//nd.softDeleteMany(1800,1900);
-
+		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.retrieveManyReferenceNos(1840,1863));
+		nd.softDeleteMany(1800,1900);
+		*/
+
+		// A good state for testing data in nilex = ID 1864 - 2480
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		List<String> nilexList  = nd.retrieveManyReferenceNos(1864, 2432);
+		List<Integer> nilexListInt = new ArrayList<>(nilexList.size());
+		for (String s: nilexList) {
+			nilexListInt.add(Integer.parseInt(s));
+		}
+		Collections.sort(nilexListInt);
+		//System.out.println(nilexListInt);
+
+
+		ICData icData = new ICData("naoyaTest", "naoyaTest");
+		HttpResponse<String> guides = icData.getGuides();
+		List<Integer> IcList = icData.collectIds(guides);
+		Collections.sort(IcList);
+		//System.out.println(IcList);
+
+		if (nilexListInt.equals(IcList)){
+			System.out.println("No update has been detected");
+		} else {
+			System.out.println("Update has been detected");
+		}
 
 	}
 }
