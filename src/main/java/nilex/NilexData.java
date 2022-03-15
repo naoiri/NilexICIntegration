@@ -158,8 +158,10 @@ public class NilexData {
 
 		return deletedIdList;
 	}
-	
-	public HttpResponse changeCategory(Integer id, Integer newCategoryId) throws IOException, InterruptedException {
+
+	//Används inte längre men sparas för senare.
+	// Radera om man är säkert på att man kommer inte behövas senare
+	/*public HttpResponse changeCategory(Integer id, Integer newCategoryId) throws IOException, InterruptedException {
 		
 		if(retrieveEntityById(id).statusCode() == 200) {
 			JSONObject json = new JSONObject();
@@ -182,5 +184,5 @@ public class NilexData {
 		}
 		return retrieveEntityById(id); //If entity with the id not found, this should respond 404
 	
-	}
+	}*/
 }
