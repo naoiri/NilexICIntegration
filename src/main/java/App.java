@@ -51,7 +51,7 @@ public class App {
 		// A good state for testing data in nilex = ID 1864 - 2432
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		List<String> nilexList  = nd.retrieveManyReferenceNos(1864, 2432);
-		List<Integer> nilexListInt = new ArrayList<>(nilexList.size());
+		List<Integer> nilexListInt = new ArrayList<>();
 		for (String s: nilexList) {
 			nilexListInt.add(Integer.parseInt(s));
 		}
@@ -70,7 +70,6 @@ public class App {
 		} else {
 			IcList.removeAll(nilexListInt);
 			System.out.println(IcList);
-
 		}
 
 	}
