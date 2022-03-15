@@ -1,8 +1,11 @@
 package nilex;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ArticleModel{
     public static class Data{
 
+    	@JsonProperty("ReferenceNo")
         public String referenceNo;
 
         public String getReferenceNo() {
@@ -12,7 +15,9 @@ public class ArticleModel{
     }
 
     public static class Root{
+    	@JsonProperty("Data")
         public Data data;
+    	
         public Object errors;
         public boolean isError;
 
@@ -22,4 +27,3 @@ public class ArticleModel{
 
     }
 }
-

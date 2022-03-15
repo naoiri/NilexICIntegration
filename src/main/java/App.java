@@ -15,15 +15,10 @@ public class App {
 		System.out.println("Integration in progress...");
 
 
-		ICData icd = new ICData("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icd.getGuides();
-		List<JSONObject> obj = icd.convertResponseToJson(guides);
-		for (JSONObject jo : obj) {
-			System.out.println(jo);
-		}
-
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		System.out.println(nd.postEntity(obj.get(0)));
+		//System.out.println(nd.retrieveEntityById(1864).body());
+		System.out.println(nd.retrieveReferenceNo(1864));
+		//System.out.println(nd.retrieveManyReferenceNos(1864, 2432));
 
 		/*NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
 		List<String> refNumbers = nd.retrieveManyReferenceNos(1859, 1860);
