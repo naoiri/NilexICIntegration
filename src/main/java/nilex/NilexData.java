@@ -159,30 +159,4 @@ public class NilexData {
 		return deletedIdList;
 	}
 
-	//Används inte längre men sparas för senare.
-	// Radera om man är säkert på att man kommer inte behövas senare
-	/*public HttpResponse changeCategory(Integer id, Integer newCategoryId) throws IOException, InterruptedException {
-		
-		if(retrieveEntityById(id).statusCode() == 200) {
-			JSONObject json = new JSONObject();
-			json.put("EntityType","Articles");
-			json.put("EntityTypeId", 2);
-			json.put("Id", id);
-			json.put("KbCategoryId", newCategoryId);
-			
-			HttpClient client = HttpClient.newHttpClient();
-	        HttpRequest request = HttpRequest.newBuilder()
-					.header("Authorization", "Bearer " + this.token)
-	                .uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
-	                .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
-	                .build();
-
-	        HttpResponse<String> response = client.send(request,
-	                HttpResponse.BodyHandlers.ofString());
-	        
-	        return response;
-		}
-		return retrieveEntityById(id); //If entity with the id not found, this should respond 404
-	
-	}*/
 }
