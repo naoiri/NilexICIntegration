@@ -15,32 +15,16 @@ public class GuideModel {
             return summary;
         }
 
-        public void setSummary(String summary) {
-            this.summary = summary;
-        }
-
         public String getFullURL() {
             return fullURL;
-        }
-
-        public void setFullURL(String fullURL) {
-            this.fullURL = fullURL;
         }
 
         public String getName() {
             return name;
         }
 
-        public void setName(String name) {
-            this.name = name;
-        }
-        
         public int getId() {
         	return this.id;
-        }
-        
-        public void setId(int id) {
-        	this.id = id;
         }
 
     }
@@ -49,9 +33,6 @@ public class GuideModel {
         private ArrayList<Result> results;
         public ArrayList<Result> getResults() {
             return results;
-        }
-        public void setResults(ArrayList<Result> results) {
-            this.results = results;
         }
     }
 

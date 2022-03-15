@@ -12,13 +12,24 @@ public class App {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 
-		System.out.println("Integration in progress...2");
+		System.out.println("Integration in progress...");
 
-		NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
+
+		ICData icd = new ICData("naoyaTest", "naoyaTest");
+		HttpResponse<String> guides = icd.getGuides();
+		List<JSONObject> obj = icd.convertResponseToJson(guides);
+		for (JSONObject jo : obj) {
+			System.out.println(jo);
+		}
+
+		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		System.out.println(nd.postEntity(obj.get(0)));
+
+		/*NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
 		List<String> refNumbers = nd.retrieveManyReferenceNos(1859, 1860);
 		for (String refNumber : refNumbers) {
 			System.out.println(refNumber);
-		}
+		}*/
 
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");

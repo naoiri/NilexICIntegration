@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ICData {
 
-	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=20";
+	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=1";
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
 	private String token;
