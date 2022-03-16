@@ -94,12 +94,13 @@ public class NilexData {
 	}
 
 	public List<String> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
+    
 		List<String> retrievedEntityList = new ArrayList<String>();
 
 		for (int id = startId; id <= endId; id++) {
 			// If the entity with the given id exists
 			if (retrieveEntityById(id).statusCode() == 200) {
-				
+
 				//Count out ReferenceNos which start "KB"(because these are created on GUI manually)
 				if (!retrieveReferenceNo(id).contains("KB")) {
 					retrievedEntityList.add(retrieveReferenceNo(id));
