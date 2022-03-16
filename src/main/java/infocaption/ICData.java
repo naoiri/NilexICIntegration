@@ -180,27 +180,30 @@ public class ICData {
 		// The creation of JSON to post to Nilex
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
-			
-			//Only the new guide
+
+			// Only the new guide
 			for (Integer in : IcList) {
-				Integer kbCategoryId = categorize(result.getName(), result.getSummary());
-				String getIdAsString = String.valueOf(result.getId());
+				if (result.getId() == in) {
+					Integer kbCategoryId = categorize(result.getName(), result.getSummary());
+					String getIdAsString = String.valueOf(result.getId());
 
-				json.put("EntityType", "Articles");
-				json.put("ArticleStatusId", 14);
-				json.put("PublishingScopeId", 2);
-				json.put("ReferenceNo", getIdAsString); // Link with infocaptions id(like "Foreign key")
-				json.put("KbCategoryId", kbCategoryId);
-				json.put("EntityTypeId", 2);
-				json.put("Title", result.getName());
-				json.put("AuthorId", 3064);
-				JSONObject innerObject = new JSONObject();
-				innerObject.put("Question", result.getSummary());
-				innerObject.put("Answer",
-						"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
-				json.put("DynamicProperties", innerObject);
+					json.put("EntityType", "Articles");
+					json.put("ArticleStatusId", 14);
+					json.put("PublishingScopeId", 2);
+					json.put("ReferenceNo", getIdAsString); // Link with infocaptions id(like "Foreign key")
+					json.put("KbCategoryId", kbCategoryId);
+					json.put("EntityTypeId", 2);
+					json.put("Title", result.getName());
+					json.put("AuthorId", 3064);
+					JSONObject innerObject = new JSONObject();
+					innerObject.put("Question", result.getSummary());
+					innerObject.put("Answer", "<a href=" + result.getFullURL()
+							+ " target=\"_blank\" >Tryck här för att komma till guiden</a>");
+					json.put("DynamicProperties", innerObject);
 
-				newGuides.add(json);
+					newGuides.add(json);
+
+				}
 			}
 		}
 
