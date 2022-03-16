@@ -110,13 +110,9 @@ public class ICData {
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		GuideModel.Root root = om.readValue(response.body(), GuideModel.Root.class);
 
-		// Convert to JSONObject
-		// JSONObject jsonObject = new JSONObject(root);
-
 		// The creation of JSON to post to Nilex
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
-
 
 			// generates kbCategoryId depending on "result.getName()" and
 			// "result.getSummary()"
@@ -144,7 +140,6 @@ public class ICData {
 		return guideList;
 	}
 	
-	//Naoyas Test
 	public List<Integer> collectIds(HttpResponse<String> response) throws JsonMappingException, JsonProcessingException{
 		List<Integer> ids = new ArrayList<Integer>();
 		
@@ -159,7 +154,7 @@ public class ICData {
 		
 	}
 	
-	public HttpResponse getGuides() throws IOException, InterruptedException {
+	public HttpResponse<String> getGuides() throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().GET().header("accept", "application/json")
