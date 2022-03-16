@@ -6,7 +6,7 @@ public class ArticleModel{
     public static class Data{
 
     	@JsonProperty("ReferenceNo")
-        public String referenceNo;
+        private String referenceNo;
 
         public String getReferenceNo() {
             return referenceNo;

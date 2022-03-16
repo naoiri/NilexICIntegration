@@ -17,7 +17,7 @@ public class App {
 
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		//System.out.println(nd.retrieveEntityById(1864).body());
-		System.out.println(nd.retrieveReferenceNo(1864));
+		System.out.println(nd.retrieveReferenceNo(2433));
 		//System.out.println(nd.retrieveManyReferenceNos(1864, 2432));
 
 		/*NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
