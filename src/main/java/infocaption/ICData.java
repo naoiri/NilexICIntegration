@@ -178,7 +178,7 @@ public class ICData {
 
 		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 
-		String responseBody = response.body().toString();
+		String responseBody = response.body();
 		String token = responseBody.substring(17);
 		token = token.substring(0, token.length() - 24);
 
