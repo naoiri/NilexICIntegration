@@ -168,7 +168,7 @@ public class ICData {
 
 	//(Naoyas anteckning)This goes through all the artcles first. Maybe inefficient.(Better by adding the "latest(last element in list?)")
 	// collect only newly added articles by id
-	public List<JSONObject> convertOnlyNewGuideToJson(HttpResponse<String> response, List<Integer> IcList)
+	public List<JSONObject> convertOnlyNewGuideToJson(HttpResponse<String> response, List<Integer> icList)
 			throws JsonMappingException, JsonProcessingException {
 
 		List<JSONObject> newGuides = new ArrayList<JSONObject>();
@@ -182,7 +182,7 @@ public class ICData {
 			JSONObject json = new JSONObject();
 
 			// Only the new guide
-			for (Integer in : IcList) {
+			for (Integer in : icList) {
 				if (result.getId() == in) {
 					Integer kbCategoryId = categorize(result.getName(), result.getSummary());
 					String getIdAsString = String.valueOf(result.getId());
