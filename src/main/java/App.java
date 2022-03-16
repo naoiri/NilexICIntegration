@@ -13,10 +13,10 @@ public class App {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		System.out.println("Integration in progress...");
-		ICData icData = new ICData("naoyaTest", "naoyaTest");
+		/*ICData icData = new ICData("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides();
 		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
-		System.out.println(jsonObjects.size());
+		System.out.println(jsonObjects.size());*/
 
 		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		//System.out.println(nd.retrieveEntityById(1864).body());
