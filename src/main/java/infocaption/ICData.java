@@ -35,7 +35,9 @@ public class ICData {
 		{
 			put(11, "Övrigt");
 			// value "Övrigt" is not good because if the title contains the word "övrigt"
-			// it would allocate wrong. null would cause NullPointerException
+			// it would allocate wrong.
+			// It is not a problem with current articles, but it may cause a problem
+			// with future articles.
 
 			put(4, "Dator");
 			put(5, "Skrivare");
