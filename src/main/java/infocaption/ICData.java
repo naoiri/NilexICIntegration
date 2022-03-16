@@ -161,8 +161,53 @@ public class ICData {
 		HttpRequest request = HttpRequest.newBuilder().GET().header("accept", "application/json")
 				.header("Authorization", "Bearer " + this.token).uri(URI.create(URL_GUIDES)).build();
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+		
+		
 		return response;
+	}
+
+	//(Naoyas anteckning)This goes through all the artcles first. Maybe inefficient.(Better by adding the "latest(last element in list?)")
+	// collect only newly added articles by id
+	public List<JSONObject> convertOnlyNewGuideToJson(HttpResponse<String> response, int id)
+			throws JsonMappingException, JsonProcessingException {
+
+		List<JSONObject> newGuides = new ArrayList<JSONObject>();
+
+		// deserialize JSON repsone to Modelclass
+		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+		GuideModel.Root root = om.readValue(response.body(), GuideModel.Root.class);
+
+		// The creation of JSON to post to Nilex
+		for (GuideModel.Result result : root.getResults()) {
+			JSONObject json = new JSONObject();
+			
+			//Only the new guide
+			if(result.getId() == id) {
+				
+				Integer kbCategoryId = categorize(result.getName(), result.getSummary());
+				String getIdAsString = String.valueOf(result.getId());
+
+				json.put("EntityType", "Articles");
+				json.put("ArticleStatusId", 14);
+				json.put("PublishingScopeId", 2);
+				json.put("ReferenceNo", getIdAsString); // Link with infocaptions id(like "Foreign key")
+				json.put("KbCategoryId", kbCategoryId);
+				json.put("EntityTypeId", 2);
+				json.put("Title", result.getName());
+				json.put("AuthorId", 3064);
+				JSONObject innerObject = new JSONObject();
+				innerObject.put("Question", result.getSummary());
+				innerObject.put("Answer",
+						"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
+				json.put("DynamicProperties", innerObject);
+			}
+
+			newGuides.add(json);
+
+		}
+
+		return newGuides;
+
 	}
 
 	private static String generateAccessToken(String id, String secret) throws IOException, InterruptedException {

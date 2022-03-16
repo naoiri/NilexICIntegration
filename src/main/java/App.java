@@ -14,61 +14,13 @@ public class App {
 	public static void main(String[] args) throws IOException, InterruptedException {
 
 		System.out.println("Integration in progress...");
-		/*ICData icData = new ICData("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icData.getGuides();
-		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
-		System.out.println(jsonObjects.size());*/
-
-		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		//System.out.println(nd.retrieveEntityById(1864).body());
-		//System.out.println(nd.retrieveReferenceNo(2433));
-		//System.out.println(nd.retrieveManyReferenceNos(1864, 2432));
-
-		/*NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
-		List<String> refNumbers = nd.retrieveManyReferenceNos(1859, 1860);
-		for (String refNumber : refNumbers) {
-			System.out.println(refNumber);
-		}*/
-
-		/*
-		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		ICData icData = new ICData("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icData.getGuides();
-
-		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
-		System.out.println(jsonObjects.size());
-		for (JSONObject jo : jsonObjects) {
-			System.out.println(nd.retrieveEntityById(2433).body());
-		}*/
-
-		/*
-		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		ICData icData = new ICData("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icData.getGuides();
 		
-		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
-		for (JSONObject jo : jsonObjects) {
-			System.out.println(nd.postEntity(jo));
-		}
-		*/
-
 		/*
-		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		nd.changeCategory(1758, 18);
-		*/
-
-		/*
-		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		nd.softDeleteMany(1800,1900);
-		*/
-
-		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		//System.out.println(nd.retrieveManyReferenceNos(1840,1863));
 
 		// A good state for testing data in nilex = ID 1864 - 2432
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		List<String> nilexList  = nd.retrieveManyReferenceNos(1864, 2432);
-		List<Integer> nilexListInt = new ArrayList<>();
+		List<Integer> nilexListInt = new ArrayList<Integer>();
 		for (String s: nilexList) {
 			nilexListInt.add(Integer.parseInt(s));
 		}
@@ -88,6 +40,23 @@ public class App {
 			IcList.removeAll(nilexListInt);
 			System.out.println(IcList);
 		}
+		
+		*/
+		
+		ICData icData = new ICData("naoyaTest", "naoyaTest");
+		HttpResponse<String> guides = icData.getGuides();
+		
+		//jUST FOR TEST
+		int newID631 = 631;
+		//int newID633 = IcList.get(1);
+		
+		System.out.println("This is end of generating id for the new articles.");
+		
+		List<JSONObject> newGuides = icData.convertOnlyNewGuideToJson(guides, 631); 
+		
+		System.out.println(newGuides.get(0));
+		
 
 	}
+	
 }
