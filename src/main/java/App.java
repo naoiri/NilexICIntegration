@@ -15,7 +15,7 @@ public class App {
 
 		System.out.println("Integration in progress...");
 		
-		/*
+
 
 		// A good state for testing data in nilex = ID 1864 - 2432
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
@@ -38,11 +38,13 @@ public class App {
 			System.out.println("No update has been detected");
 		} else {
 			IcList.removeAll(nilexListInt);
-			System.out.println(IcList);
+			List<JSONObject> newGuides = icData.convertOnlyNewGuideToJson(guides, IcList);
+			System.out.println(newGuides.get(0));
 		}
 		
-		*/
-		
+
+
+		/*
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides();
 		
@@ -52,10 +54,10 @@ public class App {
 		
 		System.out.println("This is end of generating id for the new articles.");
 		
-		List<JSONObject> newGuides = icData.convertOnlyNewGuideToJson(guides, 631); 
+		List<JSONObject> newGuides = icData.convertOnlyNewGuideToJson(guides, 631);
 		
 		System.out.println(newGuides.get(0));
-		
+		*/
 
 	}
 	
