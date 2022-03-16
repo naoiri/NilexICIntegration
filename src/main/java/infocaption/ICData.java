@@ -59,7 +59,7 @@ public class ICData {
 	// Inparameter: result.getName(), result.getSummary()
 	// Returns a kbCategoryId number which associates with the category keyword
 	// This method is private because this is only used in convertResponseToJson()
-	private Integer categorize(String name, String summary) {
+	private int categorize(String name, String summary) {
 
 		// To go through the categories with index. This will be used in the for-loop
 		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
@@ -72,6 +72,7 @@ public class ICData {
 
 		// Loop through the categories(words)
 		// Allocates categoryId depending on what word is in the result.getName()
+		// and result.getSummary()
 		for (int i = 0; i < keys.size(); i++) {
 
 			String currentSearchWord = categories.get(keys.get(i));
