@@ -19,7 +19,12 @@ public class App {
 
 		// A good state for testing data in nilex = ID 1864 - 2432
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		List<String> nilexList  = nd.retrieveManyReferenceNos(1864, 2432);
+		List<String> nilexList  = nd.retrieveManyReferenceNos(1864, 2432); 
+		//At the moment this is a problem. 
+		//endId for retriveManyReferenceNos() has to be changed every time there is an update on Nilex.
+		//retrieveAllReferenceNos() would have solved it. 
+		
+		
 		List<Integer> nilexListInt = new ArrayList<Integer>();
 		for (String s: nilexList) {
 			nilexListInt.add(Integer.parseInt(s));
