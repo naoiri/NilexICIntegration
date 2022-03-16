@@ -53,12 +53,16 @@ public class ICData {
 		}
 	};
 
-	// This method checks the sentence from "result.getName() and
-	// result.getSummary()" if the sentence has
-	// one of the category keywords
-	// Inparameter: result.getName(), result.getSummary()
-	// Returns a kbCategoryId number which associates with the category keyword
-	// This method is private because this is only used in convertResponseToJson()
+	/**
+	 * Checks the sentence from API to allocate a category number
+	 * @param name result.getName() from the API
+	 * @param summary result.getSummary() from the API
+	 *
+	 * @return a category number which associates with the category keyword
+	 *
+	 * This is private because this is only used in convertResponseToJson()
+	 */
+
 	private int categorize(String name, String summary) {
 
 		// To go through the categories with index. This will be used in the for-loop
