@@ -15,9 +15,9 @@ public class App {
 		System.out.println("Integration in progress...");
 
 
-		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
+		//NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		//System.out.println(nd.retrieveEntityById(1864).body());
-		System.out.println(nd.retrieveReferenceNo(2433));
+		//System.out.println(nd.retrieveReferenceNo(2433));
 		//System.out.println(nd.retrieveManyReferenceNos(1864, 2432));
 
 		/*NilexData nd = new NilexData("aiste.pakstyte@herrljunga.se", "Praktik2022");
@@ -28,14 +28,13 @@ public class App {
 
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		ICData icData = new ICData();
-		String icdToken = icData.generateAccessToken("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icData.getGuides(icdToken);
-		
+		ICData icData = new ICData("naoyaTest", "naoyaTest");
+		HttpResponse<String> guides = icData.getGuides();
+
 		List<JSONObject> jsonObjects = icData.convertResponseToJson(guides);
 		System.out.println(jsonObjects.size());
 		for (JSONObject jo : jsonObjects) {
-			System.out.println(nd.postEntity(jo));
+			System.out.println(nd.retrieveEntityById(2433).body());
 		}*/
 
 		/*

@@ -16,10 +16,10 @@ public class ArticleModel{
 
     public static class Root{
     	@JsonProperty("Data")
-        public Data data;
+        private Data data;
     	
-        public Object errors;
-        public boolean isError;
+        private Object errors;
+        private boolean isError;
 
         public Data getData() {
             return data;
