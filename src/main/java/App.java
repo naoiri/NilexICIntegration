@@ -45,7 +45,7 @@ public class App {
 			IcList.removeAll(nilexListInt);
 			List<JSONObject> newGuides = icData.convertOnlyNewGuideToJson(guides, IcList);
 			for (JSONObject jo : newGuides) {
-				System.out.println(nd.postEntity(jo));
+				System.out.println(jo);
 			}
 		}
 
