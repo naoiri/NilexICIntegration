@@ -22,7 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class ICData {
 
-	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=600";
+	private static final String URL_GUIDES = "https://hervar.infocaption.com/API/public/guides?hitsPerPage=1";
+
 	private static final String URL_AUTH = "https://hervar.infocaption.com/oauth2/token";
 
 	private String token;
@@ -35,7 +36,9 @@ public class ICData {
 		{
 			put(11, "Övrigt");
 			// value "Övrigt" is not good because if the title contains the word "övrigt"
-			// it would allocate wrong. null would cause NullPointerException
+			// it would allocate wrong.
+			// It is not a problem with current articles, but it may cause a problem
+			// with future articles.
 
 			put(4, "Dator");
 			put(5, "Skrivare");
@@ -51,13 +54,17 @@ public class ICData {
 		}
 	};
 
-	// This method checks the sentence from "result.getName() and
-	// result.getSummary()" if the sentence has
-	// one of the category keywords
-	// Inparameter: result.getName(), result.getSummary()
-	// Returns a kbCategoryId number which associates with the category keyword
-	// This method is private because this is only used in convertResponseToJson()
-	private Integer categorize(String name, String summary) {
+	/**
+	 * Checks the sentence from API to allocate a category number
+	 * @param name result.getName() from the API
+	 * @param summary result.getSummary() from the API
+	 *
+	 * @return a category number which associates with the category keyword
+	 *
+	 * This is private because this is only used in convertResponseToJson()
+	 */
+
+	private int categorize(String name, String summary) {
 
 		// To go through the categories with index. This will be used in the for-loop
 		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
@@ -70,6 +77,7 @@ public class ICData {
 
 		// Loop through the categories(words)
 		// Allocates categoryId depending on what word is in the result.getName()
+		// and result.getSummary()
 		for (int i = 0; i < keys.size(); i++) {
 
 			String currentSearchWord = categories.get(keys.get(i));
@@ -103,13 +111,9 @@ public class ICData {
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		GuideModel.Root root = om.readValue(response.body(), GuideModel.Root.class);
 
-		// Convert to JSONObject
-		// JSONObject jsonObject = new JSONObject(root);
-
 		// The creation of JSON to post to Nilex
 		for (GuideModel.Result result : root.getResults()) {
 			JSONObject json = new JSONObject();
-
 
 			// generates kbCategoryId depending on "result.getName()" and
 			// "result.getSummary()"
@@ -137,7 +141,6 @@ public class ICData {
 		return guideList;
 	}
 	
-	//Naoyas Test
 	public List<Integer> collectIds(HttpResponse<String> response) throws JsonMappingException, JsonProcessingException{
 		List<Integer> ids = new ArrayList<Integer>();
 		
@@ -152,7 +155,7 @@ public class ICData {
 		
 	}
 	
-	public HttpResponse getGuides() throws IOException, InterruptedException {
+	public HttpResponse<String> getGuides() throws IOException, InterruptedException {
 
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().GET().header("accept", "application/json")
@@ -176,7 +179,7 @@ public class ICData {
 
 		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 
-		String responseBody = response.body().toString();
+		String responseBody = response.body();
 		String token = responseBody.substring(17);
 		token = token.substring(0, token.length() - 24);
 

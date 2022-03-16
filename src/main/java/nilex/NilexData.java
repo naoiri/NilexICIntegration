@@ -67,24 +67,9 @@ public class NilexData {
 	//Retrieve the ReferenceNo from nilex
 	public String retrieveReferenceNo(Integer id) throws IOException, InterruptedException {
 
-		Map<Object, Object> values = new HashMap<Object, Object>();
-		values.put("EntityType", "Articles");
-		values.put("Id", id);
-
-		ObjectMapper objectMapper = new ObjectMapper();
-		String requestBody = objectMapper.writeValueAsString(values);
-
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder().header("accept", "application/json")
-				.header("Authorization", "Bearer " + this.token)
-				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/getentitybyid"))
-				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
-
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+		HttpResponse<String> response = retrieveEntityById(id);
 		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
-
 
 		return articleModel.getData().getReferenceNo();
 	}
@@ -109,7 +94,8 @@ public class NilexData {
 	}
 
 	public List<String> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
-		List<String> retrievedEntityList = new ArrayList<>();
+    
+		List<String> retrievedEntityList = new ArrayList<String>();
 
 		for (int id = startId; id <= endId; id++) {
 			// If the entity with the given id exists
@@ -173,29 +159,5 @@ public class NilexData {
 
 		return deletedIdList;
 	}
-	
-	public HttpResponse changeCategory(Integer id, Integer newCategoryId) throws IOException, InterruptedException {
-		
-		if(retrieveEntityById(id).statusCode() == 200) {
-			JSONObject json = new JSONObject();
-			json.put("EntityType","Articles");
-			json.put("EntityTypeId", 2);
-			json.put("Id", id);
-			json.put("KbCategoryId", newCategoryId);
-			
-			HttpClient client = HttpClient.newHttpClient();
-	        HttpRequest request = HttpRequest.newBuilder()
-					.header("Authorization", "Bearer " + this.token)
-	                .uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
-	                .POST(HttpRequest.BodyPublishers.ofString(json.toString()))
-	                .build();
 
-	        HttpResponse<String> response = client.send(request,
-	                HttpResponse.BodyHandlers.ofString());
-	        
-	        return response;
-		}
-		return retrieveEntityById(id); //If entity with the id not found, this should respond 404
-	
-	}
 }
