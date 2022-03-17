@@ -54,53 +54,6 @@ public class ICData {
 		}
 	};
 
-	/**
-	 * Checks the sentence from API to allocate a category number
-	 * @param name result.getName() from the API
-	 * @param summary result.getSummary() from the API
-	 *
-	 * @return a category number which associates with the category keyword
-	 *
-	 * This is private because this is only used in convertResponseToJson()
-	 */
-
-	private int categorize(String name, String summary) {
-
-		// To go through the categories with index. This will be used in the for-loop
-		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
-
-		int kbCategoryId = 11;
-		// Initialize with 11(as "Övrigt").
-		// If no other category words are found it ends up as "Övrigt"
-
-		String oneSentence = name + summary;
-
-		// Loop through the categories(words)
-		// Allocates categoryId depending on what word is in the result.getName()
-		// and result.getSummary()
-		for (int i = 0; i < keys.size(); i++) {
-
-			String currentSearchWord = categories.get(keys.get(i));
-
-			// When searching IAG, only CAPITAL letters check(To avoid ex. "diagram")
-			if (currentSearchWord.equals("IAG")) {
-				if (oneSentence.indexOf(currentSearchWord) != -1) {
-					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
-				}
-			} else {
-				// If "name" has one of the category words(t.ex "Teams", "Outlook")
-				if (oneSentence.indexOf(currentSearchWord) != -1
-						|| oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
-					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
-
-				}
-			}
-
-		}
-
-		return kbCategoryId;
-	}
-
 	public List<JSONObject> convertResponseToJson(HttpResponse<String> response)
 			throws JsonMappingException, JsonProcessingException {
 
@@ -166,7 +119,7 @@ public class ICData {
 		return response;
 	}
 
-	//(Naoyas anteckning)This goes through all the artcles first. Maybe inefficient.(Better by adding the "latest(last element in list?)")
+	//(Naoyas anteckning)This goes through all the artcles first. Maybe ineffective.(Better by adding the "latest(last element in list?)")
 	// collect only newly added articles by id
 	public List<JSONObject> convertOnlyNewGuideToJson(HttpResponse<String> response, List<Integer> icList)
 			throws JsonMappingException, JsonProcessingException {
@@ -182,8 +135,8 @@ public class ICData {
 			JSONObject json = new JSONObject();
 
 			// Only the new guide
-			for (Integer in : icList) {
-				if (result.getId() == in) {
+			for (int newGuideId : icList) {
+				if (result.getId() == newGuideId) {
 					Integer kbCategoryId = categorize(result.getName(), result.getSummary());
 					String getIdAsString = String.valueOf(result.getId());
 
@@ -209,6 +162,53 @@ public class ICData {
 
 		return newGuides;
 
+	}
+	
+	/**
+	 * Checks the sentence from API to allocate a category number
+	 * @param name result.getName() from the API
+	 * @param summary result.getSummary() from the API
+	 *
+	 * @return a category number which associates with the category keyword
+	 *
+	 * This is private because this is only used in convertResponseToJson()
+	 */
+
+	private int categorize(String name, String summary) {
+
+		// To go through the categories with index. This will be used in the for-loop
+		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
+
+		int kbCategoryId = 11;
+		// Initialize with 11(as "Övrigt").
+		// If no other category words are found it ends up as "Övrigt"
+
+		String oneSentence = name + summary;
+
+		// Loop through the categories(words)
+		// Allocates categoryId depending on what word is in the result.getName()
+		// and result.getSummary()
+		for (int i = 0; i < keys.size(); i++) {
+
+			String currentSearchWord = categories.get(keys.get(i));
+
+			// When searching IAG, only CAPITAL letters check(To avoid ex. "diagram")
+			if (currentSearchWord.equals("IAG")) {
+				if (oneSentence.indexOf(currentSearchWord) != -1) {
+					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
+				}
+			} else {
+				// If "name" has one of the category words(t.ex "Teams", "Outlook")
+				if (oneSentence.indexOf(currentSearchWord) != -1
+						|| oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
+					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
+
+				}
+			}
+
+		}
+
+		return kbCategoryId;
 	}
 
 	private static String generateAccessToken(String id, String secret) throws IOException, InterruptedException {
