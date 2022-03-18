@@ -46,11 +46,24 @@ public class ICData {
 			put(14, "iPad");
 			put(15, "Mobiltelefon");
 
-			put(12, "Teams");
-			put(13, "Outlook");
 			put(16, "IAG");
 			put(17, "Trio");
 			put(18, "VPN");
+			
+			put(20, "Nilex");
+			put(21, "Office");
+			put(22, "Excel");
+			put(23, "PowerPoint");
+			put(24, "Word");
+			put(25, "Outlook");
+			put(26, "Teams");
+			put(27, "OneDrive");
+			put(28, "Yammer");
+			put(29, "Delve");
+			put(30, "Sharepoint");
+			put(31, "Planner");
+			
+
 		}
 	};
 
