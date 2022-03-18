@@ -209,9 +209,10 @@ public class ICData {
 			if (currentSearchWord.equals("IAG")) {
 				if (oneSentence.indexOf(currentSearchWord) != -1) {
 					kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
+
 				}
 			} else {
-				// If "name" has one of the category words(t.ex "Teams", "Outlook")
+				// If "name" or "summary" has one of the category words(t.ex "Teams", "Outlook")
 				if (oneSentence.indexOf(currentSearchWord) != -1
 						|| oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
 					kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
