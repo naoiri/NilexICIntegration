@@ -36,7 +36,7 @@ public class ICData {
 		{
 			put(11, "Övrigt");
 			// value "Övrigt" is not good because if the title contains the word "övrigt"
-			// it would allocate wrong.
+			// it would assign wrong.
 			// It is not a problem with current articles, but it may cause a problem
 			// with future articles.
 
@@ -178,7 +178,7 @@ public class ICData {
 	}
 	
 	/**
-	 * Checks the sentence from API to allocate a category number
+	 * Checks the sentence from API to assign a category number
 	 * @param name result.getName() from the API
 	 * @param summary result.getSummary() from the API
 	 *
@@ -199,7 +199,7 @@ public class ICData {
 		String oneSentence = name + summary;
 
 		// Loop through the categories(words)
-		// Allocates categoryId depending on what word is in the result.getName()
+		// assigns categoryId depending on what word is in the result.getName()
 		// and result.getSummary()
 		for (int i = 0; i < keys.size(); i++) {
 
@@ -208,13 +208,13 @@ public class ICData {
 			// When searching IAG, only CAPITAL letters check(To avoid ex. "diagram")
 			if (currentSearchWord.equals("IAG")) {
 				if (oneSentence.indexOf(currentSearchWord) != -1) {
-					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
+					kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
 				}
 			} else {
 				// If "name" has one of the category words(t.ex "Teams", "Outlook")
 				if (oneSentence.indexOf(currentSearchWord) != -1
 						|| oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
-					kbCategoryId = keys.get(i); // Allocates "1", "12", "13"....
+					kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
 
 				}
 			}
