@@ -32,6 +32,7 @@ public class ICData {
 		this.token = generateAccessToken(id, secret);
 	}
 
+	//Map of categories that are used in Nilex
 	private Map<Integer, String> categories = new HashMap<Integer, String>() {
 		{
 			put(11, "Övrigt");
@@ -52,6 +53,7 @@ public class ICData {
 			
 			put(20, "Nilex");
 			put(21, "Office");
+			put(33, "Windows");
 			put(22, "Excel");
 			put(23, "PowerPoint");
 			put(24, "Word");
@@ -199,7 +201,7 @@ public class ICData {
 		String oneSentence = name + summary;
 
 		// Loop through the categories(words)
-		// assigns categoryId depending on what word is in the result.getName()
+		// assigns kbCategoryId depending on what word is in the result.getName()
 		// and result.getSummary()
 		for (int i = 0; i < keys.size(); i++) {
 
