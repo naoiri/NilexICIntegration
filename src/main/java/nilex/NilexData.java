@@ -26,24 +26,6 @@ public class NilexData {
 		
 	}
 
-	private static String generateAccessToken(String email, String password) throws IOException, InterruptedException {
-
-		String url_auth = "http://10.142.11.54:1900/api/logon/TakeAuthenticationToken?email=hervar.se%5C" + email
-				+ "&password=" + password;
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url_auth))
-				.POST(HttpRequest.BodyPublishers.noBody()).build();
-
-		HttpClient client = HttpClient.newHttpClient();
-
-		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-
-		String responseBody = response.body().toString();
-		String token = responseBody.substring(20);
-		token = token.substring(0, token.length() - 141);
-
-		return token;
-	}
-
 	public HttpResponse retrieveEntityById(Integer id) throws IOException, InterruptedException {
 
 		Map<Object, Object> values = new HashMap<Object, Object>();
@@ -159,5 +141,25 @@ public class NilexData {
 
 		return deletedIdList;
 	}
+	
+
+	private static String generateAccessToken(String email, String password) throws IOException, InterruptedException {
+
+		String url_auth = "http://10.142.11.54:1900/api/logon/TakeAuthenticationToken?email=hervar.se%5C" + email
+				+ "&password=" + password;
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url_auth))
+				.POST(HttpRequest.BodyPublishers.noBody()).build();
+
+		HttpClient client = HttpClient.newHttpClient();
+
+		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+
+		String responseBody = response.body().toString();
+		String token = responseBody.substring(20);
+		token = token.substring(0, token.length() - 141);
+
+		return token;
+	}
+
 
 }
