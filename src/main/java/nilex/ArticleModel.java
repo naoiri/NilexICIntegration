@@ -2,10 +2,10 @@ package nilex;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ArticleModel{
-    public static class Data{
+public class ArticleModel {
+    public static class Data {
 
-    	@JsonProperty("ReferenceNo")
+        @JsonProperty("ReferenceNo")
         private String referenceNo;
 
         public String getReferenceNo() {
@@ -14,10 +14,10 @@ public class ArticleModel{
 
     }
 
-    public static class Root{
-    	@JsonProperty("Data")
+    public static class Root {
+        @JsonProperty("Data")
         private Data data;
-    	
+
         private Object errors;
         private boolean isError;
 

@@ -49,21 +49,6 @@ public class App {
 			}
 		}
 
-
-		/*
-		ICData icData = new ICData("naoyaTest", "naoyaTest");
-		HttpResponse<String> guides = icData.getGuides();
-		
-		//jUST FOR TEST
-		int newID631 = 631;
-		//int newID633 = IcList.get(1);
-		
-		System.out.println("This is end of generating id for the new articles.");
-		
-		List<JSONObject> newGuides = icData.convertOnlyNewGuideToJson(guides, 631);
-		
-		System.out.println(newGuides.get(0));
-		*/
 	}
 	
 }

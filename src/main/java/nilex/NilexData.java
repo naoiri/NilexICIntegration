@@ -1,5 +1,9 @@
 package nilex;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -8,158 +12,149 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import org.json.JSONObject;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
 
 public class NilexData {
 
-	private String token;
+    private final String token;
 
-	public NilexData(String email, String password) throws IOException, InterruptedException {
-		this.token = generateAccessToken(email, password);
-		
-	}
+    public NilexData(String email, String password) throws IOException, InterruptedException {
+        this.token = generateAccessToken(email, password);
 
-	public HttpResponse retrieveEntityById(Integer id) throws IOException, InterruptedException {
+    }
 
-		Map<Object, Object> values = new HashMap<Object, Object>();
-		values.put("EntityType", "Articles");
-		values.put("Id", id);
+    private static String generateAccessToken(String email, String password) throws IOException, InterruptedException {
 
-		ObjectMapper objectMapper = new ObjectMapper();
-		String requestBody = objectMapper.writeValueAsString(values);
+        String url_auth = "http://10.142.11.54:1900/api/logon/TakeAuthenticationToken?email=hervar.se%5C" + email
+                + "&password=" + password;
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url_auth))
+                .POST(HttpRequest.BodyPublishers.noBody()).build();
 
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder().header("accept", "application/json")
-				.header("Authorization", "Bearer " + this.token)
-				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/getentitybyid"))
-				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
+        HttpClient client = HttpClient.newHttpClient();
 
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 
-		return response;
-	}
+        String responseBody = response.body();
+        String token = responseBody.substring(20);
+        token = token.substring(0, token.length() - 141);
 
-	//Retrieve the ReferenceNo from nilex
-	public String retrieveReferenceNo(Integer id) throws IOException, InterruptedException {
+        return token;
+    }
 
-		HttpResponse<String> response = retrieveEntityById(id);
-		ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-		ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
+    public HttpResponse retrieveEntityById(Integer id) throws IOException, InterruptedException {
 
-		return articleModel.getData().getReferenceNo();
-	}
+        Map<Object, Object> values = new HashMap<Object, Object>();
+        values.put("EntityType", "Articles");
+        values.put("Id", id);
 
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestBody = objectMapper.writeValueAsString(values);
 
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().header("accept", "application/json")
+                .header("Authorization", "Bearer " + this.token)
+                .uri(URI.create("http://10.142.11.54:1900/api/PublicApi/getentitybyid"))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
 
-	// Try not to get too many entities because this method is just calling
-	// /api/publicapi/saveentity many times
-	public List<Object> retrieveManyEntities(int startId, int endId) throws IOException, InterruptedException {
-		List<Object> retrievedEntityList = new ArrayList<Object>();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-		for (int id = startId; id <= endId; id++) {
-			// If the entity with the given id exists
-			if (retrieveEntityById(id).statusCode() == 200) {
-				retrievedEntityList.add(retrieveEntityById(id).body());
+        return response;
+    }
 
-			}
+    //Retrieve the ReferenceNo from nilex
+    public String retrieveReferenceNo(Integer id) throws IOException, InterruptedException {
 
-		}
+        HttpResponse<String> response = retrieveEntityById(id);
+        ObjectMapper om = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        ArticleModel.Root articleModel = om.readValue(response.body(), ArticleModel.Root.class);
 
-		return retrievedEntityList;
-	}
+        return articleModel.getData().getReferenceNo();
+    }
 
-	public List<String> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
-    
-		List<String> retrievedEntityList = new ArrayList<String>();
+    // Try not to get too many entities because this method is just calling
+    // /api/publicapi/saveentity many times
+    public List<Object> retrieveManyEntities(int startId, int endId) throws IOException, InterruptedException {
+        List<Object> retrievedEntityList = new ArrayList<Object>();
 
-		for (int id = startId; id <= endId; id++) {
-			// If the entity with the given id exists
-			if (retrieveEntityById(id).statusCode() == 200) {
+        for (int id = startId; id <= endId; id++) {
+            // If the entity with the given id exists
+            if (retrieveEntityById(id).statusCode() == 200) {
+                retrievedEntityList.add(retrieveEntityById(id).body());
 
-				//Count out ReferenceNos which start "KB"(because these are created on GUI manually)
-				if (!retrieveReferenceNo(id).contains("KB")) {
-					retrievedEntityList.add(retrieveReferenceNo(id));
-				}
-			}
-		}
-		return retrievedEntityList;
-	}
+            }
 
-	public HttpResponse postEntity(JSONObject article) throws IOException, InterruptedException {
+        }
 
-		String requestBody = article.toString();
+        return retrievedEntityList;
+    }
 
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder().header("Authorization", "Bearer " + this.token)
-				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
-				.POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
+    public List<String> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
 
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        List<String> retrievedEntityList = new ArrayList<String>();
 
-		return response;
-	}
+        for (int id = startId; id <= endId; id++) {
+            // If the entity with the given id exists
+            if (retrieveEntityById(id).statusCode() == 200) {
 
-	public HttpResponse softDeleteArticleById(int id) throws IOException, InterruptedException {
-		JSONObject json = new JSONObject();
-		json.put("EntityType", "Articles");
-		json.put("EntityTypeId", 2);
-		json.put("Id", id);
-		json.put("Status", -1);
+                //Count out ReferenceNos which start "KB"(because these are created on GUI manually)
+                if (!retrieveReferenceNo(id).contains("KB")) {
+                    retrievedEntityList.add(retrieveReferenceNo(id));
+                }
+            }
+        }
+        return retrievedEntityList;
+    }
 
-		HttpClient client = HttpClient.newHttpClient();
-		HttpRequest request = HttpRequest.newBuilder().header("Authorization", "Bearer " + this.token)
-				.uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
-				.POST(HttpRequest.BodyPublishers.ofString(json.toString())).build();
+    public HttpResponse postEntity(JSONObject article) throws IOException, InterruptedException {
 
-		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        String requestBody = article.toString();
 
-		return response;
-	}
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().header("Authorization", "Bearer " + this.token)
+                .uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody)).build();
 
-	// Specify startId and endId where you want to delete
-	// This will return a list of entity ids that are deleted
-	public List<Integer> softDeleteMany(int startId, int endId) throws IOException, InterruptedException {
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-		List<Integer> deletedIdList = new ArrayList<Integer>();
+        return response;
+    }
 
-		for (int id = startId; id <= endId; id++) {
-			// If the entity with the given id exists
-			if (retrieveEntityById(id).statusCode() == 200) {
-				softDeleteArticleById(id);
-				deletedIdList.add(id);
-				System.out.println(id);
-			}
+    public HttpResponse softDeleteArticleById(int id) throws IOException, InterruptedException {
+        JSONObject json = new JSONObject();
+        json.put("EntityType", "Articles");
+        json.put("EntityTypeId", 2);
+        json.put("Id", id);
+        json.put("Status", -1);
 
-		}
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder().header("Authorization", "Bearer " + this.token)
+                .uri(URI.create("http://10.142.11.54:1900/api/PublicApi/saveentity"))
+                .POST(HttpRequest.BodyPublishers.ofString(json.toString())).build();
 
-		return deletedIdList;
-	}
-	
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-	private static String generateAccessToken(String email, String password) throws IOException, InterruptedException {
+        return response;
+    }
 
-		String url_auth = "http://10.142.11.54:1900/api/logon/TakeAuthenticationToken?email=hervar.se%5C" + email
-				+ "&password=" + password;
-		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url_auth))
-				.POST(HttpRequest.BodyPublishers.noBody()).build();
+    // Specify startId and endId where you want to delete
+    // This will return a list of entity ids that are deleted
+    public List<Integer> softDeleteMany(int startId, int endId) throws IOException, InterruptedException {
 
-		HttpClient client = HttpClient.newHttpClient();
+        List<Integer> deletedIdList = new ArrayList<Integer>();
 
-		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
+        for (int id = startId; id <= endId; id++) {
+            // If the entity with the given id exists
+            if (retrieveEntityById(id).statusCode() == 200) {
+                softDeleteArticleById(id);
+                deletedIdList.add(id);
+                System.out.println(id);
+            }
 
-		String responseBody = response.body().toString();
-		String token = responseBody.substring(20);
-		token = token.substring(0, token.length() - 141);
+        }
 
-		return token;
-	}
+        return deletedIdList;
+    }
 
 
 }
