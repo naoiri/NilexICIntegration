@@ -179,27 +179,6 @@ public class ICData {
 			}
 			
 			
-			
-			
-			/*
-
-			// When searching IAG, only CAPITAL letters check(To avoid ex. "diagram")
-			if (currentSearchWord.equals("IAG")) {
-				if (oneSentence.indexOf(currentSearchWord) != -1) {
-					kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
-					break;
-
-				}
-			} else {
-				// If "name" or "summary" has one of the category words(t.ex "Teams", "Outlook")
-				if (oneSentence.indexOf(currentSearchWord) != -1
-						|| oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
-					kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
-					break;
-
-				}
-			}*/
-
 		}
 
 		return kbCategoryId;
