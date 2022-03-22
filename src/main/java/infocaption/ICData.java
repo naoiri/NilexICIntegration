@@ -45,6 +45,8 @@ public class ICData {
 
 
         categories.put(20, "Nilex");
+
+        categories.put(33, "Windows");
         categories.put(21, "Office"); //Parent category for kbCategoryNo 22-31
         categories.put(22, "Excel");
         categories.put(23, "PowerPoint");
@@ -57,7 +59,6 @@ public class ICData {
         categories.put(30, "Sharepoint");
         categories.put(31, "Planner");
 
-        categories.put(33, "Windows");
 
     }
 
@@ -126,21 +127,28 @@ public class ICData {
         // If no other category words are found it ends up as "Övrigt"
 
         String oneSentence = name + summary;
+        
+        boolean categorizingDone = false;  
 
         // Loop through the categories(words)
         // assigns kbCategoryId depending on what word is in the result.getName()
         // and result.getSummary()
         for (int i = 0; i < keys.size(); i++) {
 
+        	//If any one of search word is found, go out of this for-loop. To avoid unnecessary check
+        	if(categorizingDone) {
+        		break;
+        	}
+        	
             String currentSearchWord = categories.get(keys.get(i));
 
             switch (currentSearchWord) {
 
+            	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
                 case "IAG":
                     if (oneSentence.indexOf(currentSearchWord) != -1) {
                         kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
-                        break;  //Behövs den här breaken?
-
+                        categorizingDone = true;
                     }
                     break;
 
@@ -168,10 +176,13 @@ public class ICData {
                     //OR both first and second are filled with any officeChildren word
                     if ((firstFoundWord == null && secondFoundWord == null) || (firstFoundWord != null && secondFoundWord != null)) {
                         kbCategoryId = 21;
+                        categorizingDone = true;
                     } else if (firstFoundWord != null && secondFoundWord == null) {
 
                         //Logic for searching kbCategoryNo from categories by just a word(value, it means "firstFoundWord" here) complete this on Tuesday
                         kbCategoryId = getKbIntegersByWord(keys, firstFoundWord);
+                        categorizingDone = true;
+                        
                     }
                     break;
 
@@ -182,6 +193,7 @@ public class ICData {
                             || oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
                         if (kbCategoryId != 21) {
                             kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
+                            categorizingDone = true;
                         }
 
                     }
