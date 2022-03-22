@@ -151,7 +151,6 @@ public class ICData {
 							} else {
 								secondFoundWord = officeChildren.get(index);
 							}
-							
 						}
 					}
 					
@@ -234,30 +233,34 @@ public class ICData {
 
 			// generates kbCategoryId depending on "result.getName()" and
 			// "result.getSummary()"
-			Integer kbCategoryId = categorize(result.getName(), result.getSummary());
-			String getIdAsString = String.valueOf(result.getId());
-
-			json.put("EntityType", "Articles");
-			json.put("ArticleStatusId", 14);
-			json.put("PublishingScopeId", 2);
-			json.put("ReferenceNo", getIdAsString); //Link with infocaptions id(like "Foreign key")
-			json.put("KbCategoryId", kbCategoryId);
-			json.put("EntityTypeId", 2);
-			json.put("Title", result.getName());
-			json.put("AuthorId", 3064);
-			JSONObject innerObject = new JSONObject();
-			innerObject.put("Question", result.getSummary());
-			innerObject.put("Answer",
-					"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
-			json.put("DynamicProperties", innerObject);
-
-			guideList.add(json);
+			createJSON(guideList, result, json);
 
 		}
 
 		return guideList;
 	}
-	
+
+	private void createJSON(List<JSONObject> guideList, GuideModel.Result result, JSONObject json) {
+		Integer kbCategoryId = categorize(result.getName(), result.getSummary());
+		String getIdAsString = String.valueOf(result.getId());
+
+		json.put("EntityType", "Articles");
+		json.put("ArticleStatusId", 14);
+		json.put("PublishingScopeId", 2);
+		json.put("ReferenceNo", getIdAsString); //Link with infocaptions id(like "Foreign key")
+		json.put("KbCategoryId", kbCategoryId);
+		json.put("EntityTypeId", 2);
+		json.put("Title", result.getName());
+		json.put("AuthorId", 3064);
+		JSONObject innerObject = new JSONObject();
+		innerObject.put("Question", result.getSummary());
+		innerObject.put("Answer",
+				"<a href=" + result.getFullURL() + " target=\"_blank\" >Tryck här för att komma till guiden</a>");
+		json.put("DynamicProperties", innerObject);
+
+		guideList.add(json);
+	}
+
 	public List<Integer> collectIds(HttpResponse<String> response) throws JsonMappingException, JsonProcessingException{
 		List<Integer> ids = new ArrayList<Integer>();
 		
@@ -301,24 +304,7 @@ public class ICData {
 			// Only the new guide
 			for (int newGuideId : icList) {
 				if (result.getId() == newGuideId) {
-					Integer kbCategoryId = categorize(result.getName(), result.getSummary());
-					String getIdAsString = String.valueOf(result.getId());
-
-					json.put("EntityType", "Articles");
-					json.put("ArticleStatusId", 14);
-					json.put("PublishingScopeId", 2);
-					json.put("ReferenceNo", getIdAsString); // Link with infocaptions id(like "Foreign key")
-					json.put("KbCategoryId", kbCategoryId);
-					json.put("EntityTypeId", 2);
-					json.put("Title", result.getName());
-					json.put("AuthorId", 3064);
-					JSONObject innerObject = new JSONObject();
-					innerObject.put("Question", result.getSummary());
-					innerObject.put("Answer", "<a href=" + result.getFullURL()
-							+ " target=\"_blank\" >Tryck här för att komma till guiden</a>");
-					json.put("DynamicProperties", innerObject);
-
-					newGuides.add(json);
+					createJSON(newGuides, result, json);
 
 				}
 			}
