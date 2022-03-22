@@ -158,19 +158,23 @@ public class ICData {
 					//If it's only "Office" which is found 
 					//OR both first and second are filled with any officeChildren word 
 					if((firstFoundWord == null && secondFoundWord == null) || (firstFoundWord != null && secondFoundWord != null)) {
-						kbCategoryId = 11; 
+						kbCategoryId = 21; 
 					} else if(firstFoundWord != null && secondFoundWord == null) {
 						
 						//Logic for searching kbCategoryNo from categories by just a word(value, it means "firstFoundWord" here) complete this on Tuesday 
 						kbCategoryId = getKbIntegersByWord(keys, firstFoundWord);
 					} 
+					break;
 					
 				
 				default:
 					// If "name" or "summary" has one of the category words(t.ex "Teams", "Outlook")
 					if (oneSentence.indexOf(currentSearchWord) != -1
 							|| oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
-						kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
+						if(kbCategoryId != 21) {
+							kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
+						}
+						
 					}
 					break;
 			}
