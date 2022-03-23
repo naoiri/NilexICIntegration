@@ -150,7 +150,7 @@ public class ICData {
             		for(String eachCategoryWord: categories.values()) {
             			
             			//If any category word is found, no more need for checking Ovrigt
-            			if(oneSentence.contains(eachCategoryWord) || oneSentence.contains(eachCategoryWord.toLowerCase())) {
+            			if(oneSentence.contains(eachCategoryWord) || oneSentence.toLowerCase().contains(eachCategoryWord.toLowerCase())) {
             				ovrigt = false;
             				break;
             			}
@@ -164,7 +164,7 @@ public class ICData {
 
             	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
                 case "IAG":
-                    if (oneSentence.contains(currentSearchWord)) {
+                    if (oneSentence.toLowerCase().contains(currentSearchWord.toLowerCase())) {
                         kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
                         categorizingDone = true;
                     }
@@ -180,7 +180,7 @@ public class ICData {
                     for (int index = 0; index < officeChildren.size(); index++) {
 
                         //if name and summary has one of the officeChildren words
-                        if (oneSentence.contains(officeChildren.get(index)) || oneSentence.contains(officeChildren.get(index).toLowerCase())) {
+                        if (oneSentence.contains(officeChildren.get(index)) || oneSentence.toLowerCase().contains(officeChildren.get(index).toLowerCase())) {
 
                             if (firstFoundWord == null) {
                                 firstFoundWord = officeChildren.get(index);

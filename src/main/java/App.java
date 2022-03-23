@@ -54,7 +54,7 @@ public class App {
 
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
 
-		System.out.println(icData.categorize("word", "bil"));
+		System.out.println(icData.categorize("powerpoint", "bil"));
 	}
 	
 }
