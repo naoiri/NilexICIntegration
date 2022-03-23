@@ -89,17 +89,21 @@ public class NilexData {
         return retrievedEntityList;
     }
 
+
     public List<String> retrieveManyReferenceNos(int startId, int endId) throws IOException, InterruptedException {
 
         List<String> retrievedEntityList = new ArrayList<String>();
 
         for (int id = startId; id <= endId; id++) {
-            // If the entity with the given id exists
-            if (retrieveEntityById(id).statusCode() == 200) {
-
+            //If the id returns statuscode 404 then it has hit the end of the list of articles and and the loop stops
+            if (retrieveEntityById(id).statusCode() == 404){
+                break;
+                // If the entity with the given id exists
+            } else if(retrieveEntityById(id).statusCode() == 200) {
                 //Count out ReferenceNos which start "KB"(because these are created on GUI manually)
                 if (!retrieveReferenceNo(id).contains("KB")) {
                     retrievedEntityList.add(retrieveReferenceNo(id));
+                    System.out.println(id);
                 }
             }
         }

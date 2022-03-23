@@ -19,10 +19,10 @@ public class App {
 
 		// A good state for testing data in nilex = ID 1864 - 2432
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		List<String> nilexList  = nd.retrieveManyReferenceNos(1864, 2432); 
+		List<String> nilexList  = nd.retrieveManyReferenceNos(2430, 10000);
 		//At the moment this is a problem. 
-		//endId for retriveManyReferenceNos() has to be changed every time there is an update on Nilex.
-		//retrieveAllReferenceNos() would have solved it. 
+		//endId is set to a value that probably never is going to be reached.
+		//this is a temporary solution until we get retrieveAllReferenceNo() method working.
 		
 		
 		List<Integer> nilexListInt = new ArrayList<Integer>();
@@ -30,8 +30,9 @@ public class App {
 			nilexListInt.add(Integer.parseInt(s));
 		}
 		Collections.sort(nilexListInt);
-		//System.out.println(nilexListInt);
-
+		for (Integer i: nilexListInt) {
+			System.out.println(i);
+		}
 
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides();
@@ -45,7 +46,7 @@ public class App {
 			IcList.removeAll(nilexListInt);
 			List<JSONObject> newGuides = icData.convertOnlyNewGuideToJson(guides, IcList);
 			for (JSONObject jo : newGuides) {
-				System.out.println(jo);
+				System.out.println(nd.postEntity(jo));
 			}
 		}
 
