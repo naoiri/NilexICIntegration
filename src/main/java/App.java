@@ -16,7 +16,7 @@ public class App {
 		System.out.println("Integration in progress...");
 
 		/*
-		// A good state for testing data in nilex = ID 1864 - 2432
+		// A good state for testing data in nilex = ID 3012 - 3579
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		List<String> nilexList  = nd.retrieveManyReferenceNos(2430, 10000);
 		//At the moment this is a problem. 
@@ -50,7 +50,7 @@ public class App {
 
 		}
 		*/
-
+		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides();
@@ -58,7 +58,7 @@ public class App {
 		for (JSONObject jo: json) {
 			System.out.println(nd.postEntity(jo));
 		}
-
+		*/
 	}
 	
 }
