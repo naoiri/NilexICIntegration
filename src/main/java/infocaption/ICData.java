@@ -27,37 +27,37 @@ public class ICData {
 
     {
 
-        categories.put(11, "Övrigt");
+        categories.put(11, "övrigt");
         // value "Övrigt" is not good because if the title or summary contains the word "övrigt"
         // it would assign wrong.
         // It is not a problem with current articles, but it may cause a problem
         // with future articles.
 
-        categories.put(4, "Dator");
-        categories.put(5, "Skrivare");
-        categories.put(6, "Nätverk");
-        categories.put(14, "iPad");
-        categories.put(15, "Mobiltelefon");
+        categories.put(4, "dator");
+        categories.put(5, "skrivare");
+        categories.put(6, "nätverk");
+        categories.put(14, "ipad");
+        categories.put(15, "mobiltelefon");
 
-        categories.put(16, "IAG");
-        categories.put(17, "Trio");
-        categories.put(18, "VPN");
+        categories.put(16, "iag");
+        categories.put(17, "trio");
+        categories.put(18, "vpn");
 
 
-        categories.put(20, "Nilex");
+        categories.put(20, "nilex");
 
-        categories.put(33, "Windows");
-        categories.put(21, "Office"); //Parent category for kbCategoryNo 22-31
-        categories.put(22, "Excel");
-        categories.put(23, "PowerPoint");
-        categories.put(24, "Word");
-        categories.put(25, "Outlook");
-        categories.put(26, "Teams");
-        categories.put(27, "OneDrive");
-        categories.put(28, "Yammer");
-        categories.put(29, "Delve");
-        categories.put(30, "Sharepoint");
-        categories.put(31, "Planner");
+        categories.put(33, "windows");
+        categories.put(21, "office"); //Parent category for kbCategoryNo 22-31
+        categories.put(22, "excel");
+        categories.put(23, "powerpoint");
+        categories.put(24, "word");
+        categories.put(25, "outlook");
+        categories.put(26, "teams");
+        categories.put(27, "oneDrive");
+        categories.put(28, "yammer");
+        categories.put(29, "delve");
+        categories.put(30, "sharepoint");
+        categories.put(31, "planner");
 
 
     }
@@ -127,6 +127,7 @@ public class ICData {
         // If no other category words are found it ends up as "Övrigt"
 
         String oneSentence = name + summary;
+        oneSentence = oneSentence.toLowerCase();
         
         boolean categorizingDone = false;  
 
@@ -144,13 +145,13 @@ public class ICData {
 
             //System.out.println(currentSearchWord);
             switch (currentSearchWord) {
-            	case "Övrigt": 
+            	case "övrigt": 
             		
             		boolean ovrigt = true;
             		for(String eachCategoryWord: categories.values()) {
             			
             			//If any category word is found, no more need for checking Ovrigt
-            			if(oneSentence.contains(eachCategoryWord) || oneSentence.toLowerCase().contains(eachCategoryWord.toLowerCase())) {
+            			if(oneSentence.contains(eachCategoryWord)) {
             				ovrigt = false;
             				break;
             			}
@@ -163,14 +164,14 @@ public class ICData {
             		break;
 
             	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
-                case "IAG":
-                    if (oneSentence.toLowerCase().contains(currentSearchWord.toLowerCase())) {
+                case "iag":
+                    if (oneSentence.contains(currentSearchWord)) {
                         kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
                         categorizingDone = true;
                     }
                     break;
 
-                case "Office":
+                case "office":
 
                     String firstFoundWord = null;
                     String secondFoundWord = null;
@@ -180,7 +181,7 @@ public class ICData {
                     for (int index = 0; index < officeChildren.size(); index++) {
 
                         //if name and summary has one of the officeChildren words
-                        if (oneSentence.contains(officeChildren.get(index)) || oneSentence.toLowerCase().contains(officeChildren.get(index).toLowerCase())) {
+                        if (oneSentence.contains(officeChildren.get(index))) {
 
                             if (firstFoundWord == null) {
                                 firstFoundWord = officeChildren.get(index);
@@ -207,8 +208,7 @@ public class ICData {
 
                 default:
                     // If "name" or "summary" has one of the category words(t.ex "Teams", "Outlook")
-                    if (oneSentence.contains(currentSearchWord)
-                            || oneSentence.contains(currentSearchWord.toLowerCase())) {
+                    if (oneSentence.contains(currentSearchWord)) {
                         if (kbCategoryId != 21) {
                             kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
                             categorizingDone = true;
