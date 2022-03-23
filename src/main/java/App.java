@@ -16,7 +16,7 @@ public class App {
 		System.out.println("Integration in progress...");
 		
 
-
+		/*
 		// A good state for testing data in nilex = ID 1864 - 2432
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		List<String> nilexList  = nd.retrieveManyReferenceNos(2430, 10000);
@@ -48,8 +48,13 @@ public class App {
 			for (JSONObject jo : newGuides) {
 				System.out.println(nd.postEntity(jo));
 			}
-		}
+		}*/
 
+
+
+		ICData icData = new ICData("naoyaTest", "naoyaTest");
+
+		System.out.println(icData.categorize("word", "bil"));
 	}
 	
 }
