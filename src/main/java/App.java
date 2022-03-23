@@ -53,12 +53,14 @@ public class App {
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
+
 		HttpResponse<String> guides = icData.getGuides();
 		List<JSONObject> json = icData.convertResponseToJson(guides);
 		for (JSONObject jo: json) {
 			System.out.println(nd.postEntity(jo));
 		}
 		*/
+
 	}
 	
 }
