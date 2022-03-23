@@ -15,27 +15,25 @@ public class App {
 
 		System.out.println("Integration in progress...");
 
-
-		// A good state for testing data in nilex = ID 3580 - 4148
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		List<String> nilexList  = nd.retrieveManyReferenceNos(3580, 10000);
-		//At the moment this is a problem. 
+		// A good state for testing data in nilex = ID 3580 - 4148
+		//At the moment this is a problem.
 		//endId is set to a value that probably never is going to be reached.
 		//this is a temporary solution until we get retrieveAllReferenceNo() method working.
-		
-		
+		List<String> nilexList  = nd.retrieveManyReferenceNos(3580, 10000);
+
 		List<Integer> nilexListInt = new ArrayList<Integer>();
 		for (String s: nilexList) {
 			nilexListInt.add(Integer.parseInt(s));
 		}
-		Collections.sort(nilexListInt);
 
+		Collections.sort(nilexListInt);
 
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides();
 		List<Integer> IcList = icData.collectIds(guides);
+
 		Collections.sort(IcList);
-		//System.out.println(IcList);
 
 		if (nilexListInt.equals(IcList)){
 			System.out.println("No update has been detected");
@@ -45,7 +43,6 @@ public class App {
 			for (JSONObject jo : newGuides) {
 				System.out.println(nd.postEntity(jo));
 			}
-
 		}
 
 		/*
