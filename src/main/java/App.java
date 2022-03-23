@@ -15,10 +15,10 @@ public class App {
 
 		System.out.println("Integration in progress...");
 
-		/*
-		// A good state for testing data in nilex = ID 3012 - 3579
+
+		// A good state for testing data in nilex = ID 3580 - 4148
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
-		List<String> nilexList  = nd.retrieveManyReferenceNos(2430, 10000);
+		List<String> nilexList  = nd.retrieveManyReferenceNos(3580, 10000);
 		//At the moment this is a problem. 
 		//endId is set to a value that probably never is going to be reached.
 		//this is a temporary solution until we get retrieveAllReferenceNo() method working.
@@ -29,9 +29,7 @@ public class App {
 			nilexListInt.add(Integer.parseInt(s));
 		}
 		Collections.sort(nilexListInt);
-		for (Integer i: nilexListInt) {
-			System.out.println(i);
-		}
+
 
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
 		HttpResponse<String> guides = icData.getGuides();
@@ -49,7 +47,7 @@ public class App {
 			}
 
 		}
-		*/
+
 		/*
 		NilexData nd = new NilexData("naoya.irikura@herrljunga.se", "Praktik2022");
 		ICData icData = new ICData("naoyaTest", "naoyaTest");
@@ -60,7 +58,6 @@ public class App {
 			System.out.println(nd.postEntity(jo));
 		}
 		*/
-
 	}
 	
 }
