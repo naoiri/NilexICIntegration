@@ -142,11 +142,29 @@ public class ICData {
         	
             String currentSearchWord = categories.get(keys.get(i));
 
+            //System.out.println(currentSearchWord);
             switch (currentSearchWord) {
+            	case "Övrigt": 
+            		
+            		boolean ovrigt = true;
+            		for(String eachCategoryWord: categories.values()) {
+            			
+            			//If any category word is found, no more need for checking Ovrigt
+            			if(oneSentence.contains(eachCategoryWord) || oneSentence.contains(eachCategoryWord.toLowerCase())) {
+            				ovrigt = false;
+            				break;
+            			}
+            		}
+            		
+            		//If none of the category words are found, kbCategoryNumber stays 11 and done categorising. 
+            		if(ovrigt) {
+            			categorizingDone = true;
+            		}
+            		break;
 
             	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
                 case "IAG":
-                    if (oneSentence.indexOf(currentSearchWord) != -1) {
+                    if (oneSentence.contains(currentSearchWord)) {
                         kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
                         categorizingDone = true;
                     }
@@ -162,7 +180,7 @@ public class ICData {
                     for (int index = 0; index < officeChildren.size(); index++) {
 
                         //if name and summary has one of the officeChildren words
-                        if (oneSentence.indexOf(officeChildren.get(index)) != -1) {
+                        if (oneSentence.contains(officeChildren.get(index)) || oneSentence.contains(officeChildren.get(index).toLowerCase())) {
 
                             if (firstFoundWord == null) {
                                 firstFoundWord = officeChildren.get(index);
@@ -189,8 +207,8 @@ public class ICData {
 
                 default:
                     // If "name" or "summary" has one of the category words(t.ex "Teams", "Outlook")
-                    if (oneSentence.indexOf(currentSearchWord) != -1
-                            || oneSentence.indexOf(currentSearchWord.toLowerCase()) != -1) {
+                    if (oneSentence.contains(currentSearchWord)
+                            || oneSentence.contains(currentSearchWord.toLowerCase())) {
                         if (kbCategoryId != 21) {
                             kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
                             categorizingDone = true;
