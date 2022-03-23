@@ -173,6 +173,12 @@ public class ICData {
                     }
                     break;
 
+                case "teams":
+                    if (oneSentence.contains(currentSearchWord) || oneSentence.contains("teams")) {
+                        kbCategoryId = keys.get(i);
+                        categorizingDone = true;
+                    }
+
                 case "office":
 
                     String firstFoundWord = null;
