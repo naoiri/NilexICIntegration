@@ -39,7 +39,7 @@ public class ICData {
         categories.put(14, "ipad");
         categories.put(15, "mobiltelefon");
 
-        categories.put(16, "iag");
+        categories.put(16, "IAG");
         categories.put(17, "trio");
         categories.put(18, "vpn");
 
@@ -127,8 +127,10 @@ public class ICData {
         // If no other category words are found it ends up as "Övrigt"
 
         String oneSentence = name + summary;
-        oneSentence = oneSentence.toLowerCase();
-        
+        if (!oneSentence.contains("IAG")) {
+            oneSentence = oneSentence.toLowerCase();
+        }
+
         boolean categorizingDone = false;  
 
         // Loop through the categories(words)
@@ -164,7 +166,7 @@ public class ICData {
             		break;
 
             	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
-                case "iag":
+                case "IAG":
                     if (oneSentence.contains(currentSearchWord)) {
                         kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
                         categorizingDone = true;
