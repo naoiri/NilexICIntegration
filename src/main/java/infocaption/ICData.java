@@ -27,7 +27,7 @@ public class ICData {
 
     {
 
-        categories.put(11, "Övrigt");
+        categories.put(11, "Ovrigt");
         // value "Övrigt" is not good because if the title or summary contains the word "övrigt"
         // it would assign wrong.
         // It is not a problem with current articles, but it may cause a problem
@@ -143,7 +143,7 @@ public class ICData {
             String currentSearchWord = categories.get(keys.get(i));
 
             switch (currentSearchWord) {
-
+            		
             	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
                 case "IAG":
                     if (oneSentence.indexOf(currentSearchWord) != -1) {
@@ -158,7 +158,7 @@ public class ICData {
                     String secondFoundWord = null;
 
 
-                    //Get this with contains()
+                    //Check if officeChildren is in the sentence
                     for (int index = 0; index < officeChildren.size(); index++) {
 
                         //if name and summary has one of the officeChildren words
@@ -169,14 +169,28 @@ public class ICData {
                             } else {
                                 secondFoundWord = officeChildren.get(index);
                             }
+                        } else { //if no officeChildren words are found
+                        	break; //Let kbCategoryNo be 11.
+                        	
                         }
+                  
                     }
 
                     //If it's only "Office" which is found
-                    //OR both first and second are filled with any officeChildren word
-                    if ((firstFoundWord == null && secondFoundWord == null) || (firstFoundWord != null && secondFoundWord != null)) {
+                    if ((firstFoundWord == null && secondFoundWord == null)) {
+                    	
+                    	if(oneSentence.indexOf("Office") != -1) {
+                            kbCategoryId = 21;
+                            categorizingDone = true;
+                    	} else {
+                    		categorizingDone = true; //kbCategoryId stays on 11
+                    	}
+
+                    	//OR both first and second are filled with any officeChildren word
+                    } else if((firstFoundWord != null && secondFoundWord != null)){  
                         kbCategoryId = 21;
                         categorizingDone = true;
+                        
                     } else if (firstFoundWord != null && secondFoundWord == null) {
 
                         //Logic for searching kbCategoryNo from categories by just a word(value, it means "firstFoundWord" here) complete this on Tuesday
@@ -202,7 +216,8 @@ public class ICData {
 
 
         }
-
+   
+        
         return kbCategoryId;
     }
 
