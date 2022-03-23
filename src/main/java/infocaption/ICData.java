@@ -142,7 +142,25 @@ public class ICData {
         	
             String currentSearchWord = categories.get(keys.get(i));
 
+            //System.out.println(currentSearchWord);
             switch (currentSearchWord) {
+            	case "Övrigt": 
+            		
+            		boolean ovrigt = true;
+            		for(String eachCategoryWord: categories.values()) {
+            			
+            			//If any category word is found, no more need for checking Ovrigt
+            			if(oneSentence.indexOf(eachCategoryWord) != -1) {
+            				ovrigt = false;
+            				break;
+            			}
+            		}
+            		
+            		//If none of the category words are found, kbCategoryNumber stays 11 and done categorising. 
+            		if(ovrigt) {
+            			categorizingDone = true;
+            		}
+            		break;
 
             	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
                 case "IAG":
