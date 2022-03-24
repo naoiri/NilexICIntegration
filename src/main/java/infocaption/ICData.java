@@ -52,7 +52,7 @@ public class ICData {
         categories.put(23, "powerpoint");
         categories.put(24, "word");
         categories.put(25, "outlook");
-        categories.put(26, "teams");
+        categories.put(26, "team"); //Value should be "teams" but this messes with categorize method. Do not touch
         categories.put(27, "oneDrive");
         categories.put(28, "yammer");
         categories.put(29, "delve");
@@ -113,7 +113,7 @@ public class ICData {
                 add(categories.get(23)); //PowerPoint
                 add(categories.get(24)); //Word
                 add(categories.get(25)); //Outlook
-                add(categories.get(26)); //Teams
+                add(categories.get(26)); //Team
                 add(categories.get(27)); //OneDrive
                 add(categories.get(28)); //Yammer
                 add(categories.get(29)); //Delve
