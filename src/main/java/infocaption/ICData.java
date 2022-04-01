@@ -160,8 +160,9 @@ public class ICData {
 		// 3. Logic for Office related words
 		// If any office related word is found:
 		if (containsAnyOfficeChildren) {
-			List<String> foundWords = new ArrayList<>();
+			List<String> foundWords = new ArrayList<>(); //List of words that only consists of officeWords
 
+			//Create 
 			for (String officeWord : officeWords) {
 				if (nameAndSummary.contains(officeWord)) {
 					foundWords.add(officeWord);
@@ -178,7 +179,7 @@ public class ICData {
 				return kbCategoryId;
 			}
 
-			else { // If two words
+			else { // If two office words
 
 				if (!foundWords.contains("office")) { // If the word "Office" not found. t.ex "word" and "Excel"
 					kbCategoryId = 21;
