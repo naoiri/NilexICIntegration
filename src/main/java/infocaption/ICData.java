@@ -173,21 +173,21 @@ public class ICData {
         		return kbCategoryId;
         	} else { //If there are two or more office words are found
         		
-        		if(foundWords.size()>= 3) { //If three or more, it would automatically be "Office"
+        		if(foundWords.size()>= 3) { //If three or more, it would automatically be "Office" t.ex "word", "excel", "powerpoint"
         			kbCategoryId = 21;
         			return kbCategoryId;
         			
         		} else { //If two words
         			
-        			if(!foundWords.contains("office")){ //If the word "Office" not found. t.ex "Word" and "Excel"
+        			if(!foundWords.contains("office")){ //If the word "Office" not found. t.ex "word" and "excel"
         				kbCategoryId = 21;
         				return kbCategoryId;
         			
-        			} else if(foundWords.indexOf("office")==0) { //If the word "office" is the first in foundWords
+        			} else if(foundWords.indexOf("office")==0) { //If the word "office" is the first in foundWords. t.ex "office" and "word"
         				
         				kbCategoryId = getKbIntegersByWord(keys, foundWords.get(1));
         				return kbCategoryId;
-        			} else if(foundWords.indexOf("office")==1){ //If the word "office" is the second in foundWords
+        			} else if(foundWords.indexOf("office")==1){ //If the word "office" is the second in foundWords t.ex "word" and "office"
         				kbCategoryId = getKbIntegersByWord(keys, foundWords.get(0));
         				return kbCategoryId;
         			}
