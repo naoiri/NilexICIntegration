@@ -106,6 +106,7 @@ public class ICData {
     	
     	int kbCategoryId = 0;
     	String nameAndSummary = name + summary;
+    	nameAndSummary = nameAndSummary.toLowerCase();
     	
     	boolean isOvrigt = true;
     	boolean containsAnyOfficeChildren = false;
@@ -114,8 +115,9 @@ public class ICData {
         // To go through the categories with index. This will be used in the for-loop
         List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
 
-        List<String> officeChildren = new ArrayList<String>() {
+        List<String> officeWords = new ArrayList<String>() {
             {
+            	add(categories.get(21)); //Office
                 add(categories.get(22)); //Excel
                 add(categories.get(23)); //PowerPoint
                 add(categories.get(24)); //Word
@@ -146,8 +148,8 @@ public class ICData {
        
         } else { //2. Check if there is any officeChildren word. 
         	
-        	for(int i = 0; i<officeChildren.size(); i++) {
-        		if(nameAndSummary.contains(officeChildren.get(i))){
+        	for(int i = 0; i<officeWords.size(); i++) {
+        		if(nameAndSummary.contains(officeWords.get(i))){
         			containsAnyOfficeChildren = true;
         			break; //No more checks in this for-loop
         		}
@@ -155,9 +157,47 @@ public class ICData {
         	
         }
         
-        if(containsAnyOfficeChildren) { //3. Logic for Office related words
+        //3. Logic for Office related words
+        //If any office related word is found:
+        if(containsAnyOfficeChildren) { 
+        	List<String> foundWords = 	new ArrayList<>();
         	
+        	for(String officeWord: officeWords) {
+        		if(nameAndSummary.contains(officeWord)) {
+        			foundWords.add(officeWord);
+        		}
+        	}
+        	
+        	if(foundWords.size()==1) { //If it's just one, it is the category word
+        		kbCategoryId = getKbIntegersByWord(keys, foundWords.get(0));
+        		return kbCategoryId;
+        	} else { //If there are two or more office words are found
+        		
+        		if(foundWords.size()>= 3) { //If three or more, it would automatically be "Office"
+        			kbCategoryId = 21;
+        			return kbCategoryId;
+        			
+        		} else { //If two words
+        			
+        			if(!foundWords.contains("office")){ //If the word "Office" not found. t.ex "Word" and "Excel"
+        				kbCategoryId = 21;
+        				return kbCategoryId;
+        			
+        			} else if(foundWords.indexOf("office")==0) { //If the word "office" is the first in foundWords
+        				
+        				kbCategoryId = getKbIntegersByWord(keys, foundWords.get(1));
+        				return kbCategoryId;
+        			} else if(foundWords.indexOf("office")==1){ //If the word "office" is the second in foundWords
+        				kbCategoryId = getKbIntegersByWord(keys, foundWords.get(0));
+        				return kbCategoryId;
+        			}
+        			
+        		}
+        	}
+        
         } else { //4. Logic for other words.
+        	
+        	return 200;
         	
         }
         
