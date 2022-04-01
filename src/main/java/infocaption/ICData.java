@@ -106,7 +106,10 @@ public class ICData {
 
 		int kbCategoryId = 0;
 		String nameAndSummary = name + summary;
-		nameAndSummary = nameAndSummary.toLowerCase();
+		if(!nameAndSummary.contains("IAG")) {
+			nameAndSummary = nameAndSummary.toLowerCase();
+		}
+	
 
 		boolean isOvrigt = true;
 		boolean containsAnyOfficeChildren = false;
@@ -160,50 +163,57 @@ public class ICData {
 		// 3. Logic for Office related words
 		// If any office related word is found:
 		if (containsAnyOfficeChildren) {
-			List<String> foundWords = new ArrayList<>(); //List of words that only consists of officeWords
+			List<String> foundOfficeWords = new ArrayList<>(); // List of words that only consists of officeWords
 
-			//Create 
 			for (String officeWord : officeWords) {
 				if (nameAndSummary.contains(officeWord)) {
-					foundWords.add(officeWord);
+					foundOfficeWords.add(officeWord);
 				}
 			}
 
-			if (foundWords.size() == 1) { // If there is just one word, it is the category word
-				kbCategoryId = getKbIntegersByWord(keys, foundWords.get(0));
+			// If there is just one word, it is the category word
+			if (foundOfficeWords.size() == 1) { 
+				kbCategoryId = getKbIntegersByWord(keys, foundOfficeWords.get(0));
 				return kbCategoryId;
 
-			} else if (foundWords.size() >= 3) { // If three or more, it would automatically be "Office" t.ex "word",
-													// "excel", "powerpoint"
+			} else if (foundOfficeWords.size() >= 3) { 
+				// If three or more, it would automatically be "Office" t.ex "word", "excel", "powerpoint"
+				
 				kbCategoryId = 21;
 				return kbCategoryId;
 			}
 
-			else { // If two office words
+			// If two office words
+			else { 
 
-				if (!foundWords.contains("office")) { // If the word "Office" not found. t.ex "word" and "Excel"
+				// If the word "Office" not found. t.ex "word" and "Excel"
+				if (!foundOfficeWords.contains("office")) { 
 					kbCategoryId = 21;
 					return kbCategoryId;
 
-				} else if (foundWords.indexOf("office") == 0) { // If the word "office" is the first in foundWords. t.ex
-																// "office" and "word"
-
-					kbCategoryId = getKbIntegersByWord(keys, foundWords.get(1));
+				} else if (foundOfficeWords.indexOf("office") == 0) { 
+					// If the word "office" is the first in foundWords. t.ex "office" and "word"
+					
+					kbCategoryId = getKbIntegersByWord(keys, foundOfficeWords.get(1));
 					return kbCategoryId;
-				} else if (foundWords.indexOf("office") == 1) { // If the word "office" is the second in foundWords t.ex
-																// "word" and "office"
-					kbCategoryId = getKbIntegersByWord(keys, foundWords.get(0));
+
+				} else if (foundOfficeWords.indexOf("office") == 1) { 
+					
+					// If the word "office" is the second in foundWords t.ex "word" and "office"
+					
+					kbCategoryId = getKbIntegersByWord(keys, foundOfficeWords.get(0));
 					return kbCategoryId;
 				}
 
 			}
-		}
+		} else { // 4. Logic for other words(Words that are not related to Office).
 
-		else
-
-		{ // 4. Logic for other words.
-
-			return 200;
+			for(String word: categories.values()) {
+				if(nameAndSummary.contains(word)) {
+					kbCategoryId = getKbIntegersByWord(keys, word);
+					return kbCategoryId;
+				}
+			}
 
 		}
 
@@ -214,7 +224,7 @@ public class ICData {
 	private int getKbIntegersByWord(List<Integer> keys, String word) {
 		int kbInteger = 0; // I don't want to initialize with 0, but this is just to avoid compile error
 		String categoryValue;
-		for (int i = 11; i < keys.size(); i++) { // start with 11("Excel")
+		for (int i = 0; i < keys.size(); i++) { 
 			categoryValue = this.categories.get(keys.get(i));
 			if (word.equals(categoryValue)) {
 				kbInteger = keys.get(i);
