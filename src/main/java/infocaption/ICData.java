@@ -112,7 +112,7 @@ public class ICData {
 	
 
 		boolean isOvrigt = true;
-		boolean containsAnyOfficeChildren = false;
+		boolean containsAnyOfficeWord = false;
 
 		// To go through the categories with index. This will be used in the for-loop
 		List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
@@ -153,7 +153,7 @@ public class ICData {
 
 			for (int i = 0; i < officeWords.size(); i++) {
 				if (nameAndSummary.contains(officeWords.get(i))) {
-					containsAnyOfficeChildren = true;
+					containsAnyOfficeWord = true;
 					break; // No more checks in this for-loop
 				}
 			}
@@ -162,7 +162,7 @@ public class ICData {
 
 		// 3. Logic for Office related words
 		// If any office related word is found:
-		if (containsAnyOfficeChildren) {
+		if (containsAnyOfficeWord) {
 			List<String> foundOfficeWords = new ArrayList<>(); // List of words that only consists of officeWords
 
 			for (String officeWord : officeWords) {
