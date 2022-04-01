@@ -103,7 +103,14 @@ public class ICData {
      */
 
     public int categorize(String name, String summary) {
-
+    	
+    	int kbCategoryId = 0;
+    	String nameAndSummary = name + summary;
+    	
+    	boolean isOvrigt = true;
+    	boolean containsAnyOfficeChildren = false;
+    
+    	
         // To go through the categories with index. This will be used in the for-loop
         List<Integer> keys = new ArrayList<Integer>(this.categories.keySet());
 
@@ -122,108 +129,40 @@ public class ICData {
 
             }
         };
-        int kbCategoryId = 11;
-        // Initialize with 11(as "Övrigt").
-        // If no other category words are found it ends up as "Övrigt"
-
-        String oneSentence = name + summary;
-        if (!oneSentence.contains("IAG")) {
-            oneSentence = oneSentence.toLowerCase();
-        }
-
-        boolean categorizingDone = false;  
-
-        // Loop through the categories(words)
-        // assigns kbCategoryId depending on what word is in the result.getName()
-        // and result.getSummary()
-        for (int i = 0; i < keys.size(); i++) {
-
-        	//If any one of search word is found, go out of this for-loop. To avoid unnecessary check
-        	if(categorizingDone) {
-        		break;
-        	}
-        	
-            String currentSearchWord = categories.get(keys.get(i));
-
-            //System.out.println(currentSearchWord);
-            switch (currentSearchWord) {
-            	case "övrigt": 
-            		
-            		boolean ovrigt = true;
-            		for(String eachCategoryWord: categories.values()) {
-            			
-            			//If any category word is found, no more need for checking Ovrigt
-            			if(oneSentence.contains(eachCategoryWord)) {
-            				ovrigt = false;
-            				break;
-            			}
-            		}
-            		
-            		//If none of the category words are found, kbCategoryNumber stays 11 and done categorising. 
-            		if(ovrigt) {
-            			categorizingDone = true;
-            		}
-            		break;
-
-            	// When searching IAG, only CAPITAL letters to check(To avoid ex. "diagram")
-                case "IAG":
-                    if (oneSentence.contains(currentSearchWord)) {
-                        kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
-                        categorizingDone = true;
-                    }
-                    break;
-
-                case "office":
-
-                    String firstFoundWord = null;
-                    String secondFoundWord = null;
-
-
-                    //Get this with contains()
-                    for (int index = 0; index < officeChildren.size(); index++) {
-
-                        //if name and summary has one of the officeChildren words
-                        if (oneSentence.contains(officeChildren.get(index))) {
-
-                            if (firstFoundWord == null) {
-                                firstFoundWord = officeChildren.get(index);
-                            } else {
-                                secondFoundWord = officeChildren.get(index);
-                            }
-                        }
-                    }
-
-                    //If it's only "Office" which is found
-                    //OR both first and second are filled with any officeChildren word
-                    if ((firstFoundWord == null && secondFoundWord == null) || (firstFoundWord != null && secondFoundWord != null)) {
-                        kbCategoryId = 21;
-                        categorizingDone = true;
-                    } else if (firstFoundWord != null && secondFoundWord == null) {
-
-                        //Logic for searching kbCategoryNo from categories by just a word(value, it means "firstFoundWord" here) complete this on Tuesday
-                        kbCategoryId = getKbIntegersByWord(keys, firstFoundWord);
-                        categorizingDone = true;
-                        
-                    }
-                    break;
-
-
-                default:
-                    // If "name" or "summary" has one of the category words(t.ex "Teams", "Outlook")
-                    if (oneSentence.contains(currentSearchWord)) {
-                        if (kbCategoryId != 21) {
-                            kbCategoryId = keys.get(i); // assigns "1", "12", "13"....
-                            categorizingDone = true;
-                        }
-
-                    }
-                    break;
+        
+        //1. Check first if there is any category word. If no, it would be "Övrigt" and categorising done.  
+        for(int i = 0; i<keys.size(); i++) {
+            if(nameAndSummary.contains(categories.get(keys.get(i)))){
+            	isOvrigt = false; //If any word is found, it would not be Övrigt.
+            	break; //No more checks in this for-loop
             }
 
-
         }
-
+        
+        if(isOvrigt) {
+        
+        	kbCategoryId = 11; 
+        	return kbCategoryId; //Categorizing done! No more further checks. End of the whole method
+       
+        } else { //2. Check if there is any officeChildren word. 
+        	
+        	for(int i = 0; i<officeChildren.size(); i++) {
+        		if(nameAndSummary.contains(officeChildren.get(i))){
+        			containsAnyOfficeChildren = true;
+        			break; //No more checks in this for-loop
+        		}
+        	}
+        	
+        }
+        
+        if(containsAnyOfficeChildren) { //3. Logic for Office related words
+        	
+        } else { //4. Logic for other words.
+        	
+        }
+        
         return kbCategoryId;
+         
     }
 
     private int getKbIntegersByWord(List<Integer> keys, String word) {
