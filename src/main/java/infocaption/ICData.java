@@ -54,7 +54,7 @@ public class ICData {
 		categories.put(24, "word");
 		categories.put(25, "outlook");
 		categories.put(26, "team"); // Value should be "teams" but this messes with categorize method. Do not touch
-		categories.put(27, "oneDrive");
+		categories.put(27, "onedrive");
 		categories.put(28, "yammer");
 		categories.put(29, "delve");
 		categories.put(30, "sharepoint");
